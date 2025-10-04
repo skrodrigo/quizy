@@ -1,53 +1,153 @@
+/** biome-ignore-all lint/a11y/noSvgWithoutTitle: <> */
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { authClient } from "@/lib/auth-client";
+
+const loginSchema = z.object({
+    email: z.string().email({ message: "Email inválido" }),
+    password: z
+        .string()
+        .min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
+});
 
 export default function LoginForm() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const form = useForm<z.infer<typeof loginSchema>>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
+
+    async function onSubmit(values: z.infer<typeof loginSchema>) {
+        setIsLoading(true);
+        setError(null);
+
+        const { error } = await authClient.signIn.email({
+            email: values.email,
+            password: values.password,
+        });
+
+        if (error) {
+            setError(error.message || "Erro ao fazer login");
+            toast.error("Erro ao fazer login", {
+                description:
+                    error.message || "Verifique suas credenciais e tente novamente.",
+            });
+            setIsLoading(false);
+            return;
+        }
+
+        toast.success("Login realizado com sucesso!", {
+            description: "Você será redirecionado para o dashboard.",
+        });
+        router.push("/dashboard");
+    }
+
+    async function handleGoogleSignIn() {
+        try {
+            await authClient.signIn.social({
+                provider: "google",
+                callbackURL: "/dashboard",
+            });
+        } catch (_) {
+            toast.error("Erro ao fazer login com Google", {
+                description: "Tente novamente mais tarde.",
+            });
+        }
+    }
+
     return (
         <section className="flex min-h-screen bg-background px-4 py-16 md:py-32 dark:bg-transparent">
-            <form action="" className="max-w-92 m-auto h-fit w-full">
-
+            <div className="max-w-92 m-auto h-fit w-full">
                 <div className="p-6">
-
                     <div className="flex items-center flex-col justify-center mb-4">
                         <Link href="/" aria-label="go home">
-                            <Image src="/quizy.svg" alt="Quizy" width={100} height={100} className="w-32" />
+                            <Image
+                                src="/quizy.svg"
+                                alt="Quizy"
+                                width={100}
+                                height={100}
+                                className="w-32"
+                            />
                         </Link>
                         <p className="text-xl font-light text-foreground">Entrar</p>
                     </div>
 
-                    <div className="space-y-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="email" className="block text-sm">
-                                Email
-                            </Label>
-                            <Input type="email" required name="email" id="email" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="password" className="block text-sm">
-                                Senha
-                            </Label>
-                            <Input type="password" required name="password" id="password" />
-                        </div>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Email</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                type="email"
+                                                placeholder="seu@email.com"
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Senha</FormLabel>
+                                        <FormControl>
+                                            <Input type="password" placeholder="••••••" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-
-
-                        <Button className="w-full">Continue</Button>
-
-                    </div>
+                            <Button type="submit" className="w-full" disabled={isLoading}>
+                                {isLoading ? "Entrando..." : "Continue"}
+                            </Button>
+                        </form>
+                    </Form>
 
                     <div className="my-4 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
                         <hr className="border-dashed" />
-                        <span className="text-muted-foreground text-xs">
-                            ou
-                        </span>
+                        <span className="text-muted-foreground text-xs">ou</span>
                         <hr className="border-dashed" />
                     </div>
 
                     <div className="mt-4">
-                        <Button type="button" variant="outline" className="w-full">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className="w-full"
+                            onClick={handleGoogleSignIn}
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="0.98em"
@@ -76,13 +176,16 @@ export default function LoginForm() {
                     </div>
                 </div>
 
-                <p className="text-accent-foreground text-center text-sm">
-                    Não tem uma conta ?
-                    <Button asChild variant="link" className="px-2">
-                        <Link href="/auth/register">Crie uma conta</Link>
-                    </Button>
+                <p className="text-center text-sm text-muted-foreground">
+                    Não tem uma conta?{" "}
+                    <Link
+                        href="/auth/register"
+                        className="underline underline-offset-4 hover:text-primary"
+                    >
+                        Registrar
+                    </Link>
                 </p>
-            </form>
+            </div>
         </section>
     );
 }
