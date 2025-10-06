@@ -28,6 +28,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { authClient } from "@/lib/auth-client";
+import { SpinnerCustom } from "../ui/spinner";
 
 const registerSchema = z.object({
     email: z.string().email({ message: "Email inválido" }),
@@ -40,7 +41,7 @@ const registerSchema = z.object({
 export default function RegisterForm() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [_, setError] = useState<string | null>(null);
 
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
@@ -90,7 +91,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <section className="flex min-h-screen bg-background px-4 py-16 md:py-32 dark:bg-transparent">
+        <section className="flex min-h-screen bg-background px-4 dark:bg-transparent">
             <div className="max-w-92 m-auto h-fit w-full">
                 <div className="p-6">
                     <div className="flex items-center flex-col justify-center mb-4">
@@ -170,7 +171,7 @@ export default function RegisterForm() {
                             />
 
                             <Button type="submit" className="w-full" disabled={isLoading}>
-                                {isLoading ? "Criando conta..." : "Continue"}
+                                {isLoading ? <SpinnerCustom /> : "Registrar"}
                             </Button>
                         </form>
                         <div className="my-4 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
@@ -215,11 +216,11 @@ export default function RegisterForm() {
                     </Form>
                 </div>
 
-                <p className="text-center text-sm text-muted-foreground">
+                <p className="text-center text-xs text-muted-foreground">
                     Já tem uma conta?{" "}
                     <Link
                         href="/auth/login"
-                        className="underline underline-offset-4 hover:text-primary"
+                        className="text-blue-500 hover:text-blue-600"
                     >
                         Faça login
                     </Link>

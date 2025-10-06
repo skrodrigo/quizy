@@ -11,14 +11,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Spinner } from "@/components/ui/spinner";
+import { SpinnerCustom } from "@/components/ui/spinner";
 import { authClient, useSession } from "@/lib/auth-client";
 
 export function UserProfile() {
   const { data: session, isPending } = useSession();
 
   if (isPending) {
-    return <Spinner className="h-8 w-8" />;
+    return <SpinnerCustom />;
   }
 
   if (!session?.user) {
