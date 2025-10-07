@@ -216,7 +216,7 @@ export default function RegisterForm() {
                     </Form>
                 </div>
 
-                <p className="text-center text-xs text-muted-foreground">
+                <p className="text-center text-muted-foreground">
                     Já tem uma conta?{" "}
                     <Link
                         href="/auth/login"

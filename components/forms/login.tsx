@@ -177,7 +177,7 @@ export default function LoginForm() {
                     </div>
                 </div>
 
-                <p className="text-center text-xs text-muted-foreground">
+                <p className="text-center text-muted-foreground">
                     Não tem uma conta?{" "}
                     <Link
                         href="/auth/register"
