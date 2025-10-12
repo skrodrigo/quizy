@@ -11,14 +11,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SpinnerCustom } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { authClient, useSession } from "@/lib/auth-client";
 
 export function UserProfile() {
   const { data: session, isPending } = useSession();
 
   if (isPending) {
-    return <SpinnerCustom />;
+    return <Skeleton className="h-8 w-8 rounded-full" />;
   }
 
   if (!session?.user) {
