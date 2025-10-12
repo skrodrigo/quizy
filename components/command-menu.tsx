@@ -44,10 +44,10 @@ export function CommandMenu() {
         <Button
           variant="outline"
           className={cn(
-            "text-foreground hover:text-foreground/80 w-8 h-8",
+            "text-foreground hover:text-foreground/80 ",
           )}
         >
-          <SearchIcon />
+          <span className="mr-3 text-muted-foreground">Buscar Funis</span>          <SearchIcon />
         </Button>
       </DialogTrigger>
       <DialogContent className="p-0">
