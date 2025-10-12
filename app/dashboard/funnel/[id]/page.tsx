@@ -8,14 +8,14 @@ import {
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { FunnelFlow } from "@/components/flow/funnel-flow";
 import { FunnelConfig } from "@/components/funnel-config";
-import { FunnelFlow } from "@/components/funnel-flow";
-import { FunnelPropertiesPanel } from "@/components/funnel-properties-panel";
-import { FunnelSteps } from "@/components/funnel-steps";
-import { FunnelWidgets } from "@/components/funnel-widgets";
+import { FunnelSteps } from "@/components/steps/funnel-steps";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FunnelPropertiesPanel } from "@/components/widgets/funnel-properties-panel";
+import { FunnelWidgets } from "@/components/widgets/funnel-widgets";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useQueryState("tab", {

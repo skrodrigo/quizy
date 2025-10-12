@@ -3,8 +3,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root ::selection {
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+.dark ::selection {
+  color: var(--background);
+  background-color: var(--foreground);
+}
+
 :root {
-  --background: oklch(0.9700 0 0);
+  --background:oklch(0.9381 0 0)
   --foreground: oklch(0.1374 0 0);
   --card: oklch(0.998 0 0);
   --card-foreground: oklch(0.1374 0 0);

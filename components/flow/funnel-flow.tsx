@@ -17,11 +17,11 @@ import {
 } from "@xyflow/react";
 import { useCallback } from "react";
 import "@xyflow/react/dist/style.css";
-import { CustomFunnelNode } from "./flow/custom-funnel-node";
-import { DataEdge } from "./flow/data-edge";
-import { GroupNode } from "./flow/labeled-group-node";
-import { PlaceholderNode } from "./flow/placeholder-node";
-import { ZoomSlider } from "./flow/zoom-slider";
+import { CustomFunnelNode } from "./custom-funnel-node";
+import { DataEdge } from "./data-edge";
+import { GroupNode } from "./labeled-group-node";
+import { PlaceholderNode } from "./placeholder-node";
+import { ZoomSlider } from "./zoom-slider";
 
 const nodeTypes: NodeTypes = {
   custom: CustomFunnelNode,
