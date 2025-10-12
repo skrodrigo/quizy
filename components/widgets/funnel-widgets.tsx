@@ -49,7 +49,10 @@ const widgets = [
   { id: "video", name: "Vídeo", icon: IconVideo },
 ];
 
+import { useFunnel } from "@/contexts/funnel-context";
+
 export function FunnelWidgets() {
+  const { selectedStepId, addWidget } = useFunnel();
   const [showTopFade, setShowTopFade] = useState(false);
   const [showBottomFade, setShowBottomFade] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -72,6 +75,13 @@ export function FunnelWidgets() {
     return () => scrollElement.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleAddWidget = (widgetId: string) => {
+    if (!selectedStepId) {
+      return;
+    }
+    addWidget(selectedStepId, widgetId);
+  };
+
   return (
     <div className="min-w-[200px] max-w-[200px] relative">
       {showTopFade && (
@@ -87,6 +97,8 @@ export function FunnelWidgets() {
                 key={widget.id}
                 variant="outline"
                 className="w-full justify-start"
+                onClick={() => handleAddWidget(widget.id)}
+                disabled={!selectedStepId}
               >
                 <Icon stroke={2} className="size-4" />
                 <span className="text-foreground">{widget.name}</span>

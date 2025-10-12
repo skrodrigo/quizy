@@ -8,6 +8,7 @@ import {
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { FunnelEditor } from "@/components/editor/funnel-editor";
 import { FunnelFlow } from "@/components/flow/funnel-flow";
 import { FunnelConfig } from "@/components/funnel-config";
 import { FunnelSteps } from "@/components/steps/funnel-steps";
@@ -108,11 +109,7 @@ export default function Page() {
               <>
                 <FunnelSteps />
                 <FunnelWidgets />
-
-                <div className="flex-1 flex justify-center items-center">
-                  <span>meio</span>
-                </div>
-
+                <FunnelEditor />
                 <FunnelPropertiesPanel />
               </>
             )}

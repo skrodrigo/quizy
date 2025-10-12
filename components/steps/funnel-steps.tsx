@@ -193,15 +193,22 @@ export function FunnelSteps() {
     }),
   );
 
+  const isUpdatingFromUrl = useRef(false);
+  const isUpdatingFromContext = useRef(false);
+
   useEffect(() => {
-    if (stepId && stepId !== selectedStepId) {
+    if (stepId && stepId !== selectedStepId && !isUpdatingFromContext.current) {
+      isUpdatingFromUrl.current = true;
       setSelectedStepId(stepId);
+      isUpdatingFromUrl.current = false;
     }
   }, [stepId, selectedStepId, setSelectedStepId]);
 
   useEffect(() => {
-    if (selectedStepId !== stepId) {
+    if (selectedStepId && selectedStepId !== stepId && !isUpdatingFromUrl.current) {
+      isUpdatingFromContext.current = true;
       setStepId(selectedStepId);
+      isUpdatingFromContext.current = false;
     }
   }, [selectedStepId, stepId, setStepId]);
 
