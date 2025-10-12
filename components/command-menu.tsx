@@ -6,8 +6,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./ui/command";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-import { Kbd, KbdGroup } from "./ui/kbd";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 export function CommandMenu() {
   const router = useRouter();
@@ -43,15 +42,16 @@ export function CommandMenu() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          variant="secondary"
+          variant="outline"
           className={cn(
-            "bg-transparent w-fit dark:bg-transparent text-foreground hover:text-foreground/80 justify-start pl-3 font-medium shadow-none",
+            "text-foreground hover:text-foreground/80 w-8 h-8",
           )}
         >
           <SearchIcon />
         </Button>
       </DialogTrigger>
       <DialogContent className="p-0">
+        <DialogTitle className="sr-only" />
         <Command className="rounded-lg border shadow-md">
           <CommandInput placeholder="Buscar páginas..." />
           <CommandList>

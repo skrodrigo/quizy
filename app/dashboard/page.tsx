@@ -64,7 +64,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -90,11 +89,11 @@ const chartConfig = {
   },
   desktop: {
     label: "Desktop",
-    color: "var(--chart-3)",
+    color: "var(--chart-2)",
   },
   mobile: {
     label: "Mobile",
-    color: "var(--chart-5)",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
@@ -356,7 +355,7 @@ export default function DashboardPage() {
         className="flex flex-col flex-1"
       >
         <header>
-          <div className="w-full mx-auto px-6 flex justify-between border-b">
+          <div className="w-full mx-auto px-6 flex justify-between border-b min-h-12 max-h-12">
             <div className="flex items-center justify-between gap-4">
               <Image
                 src="/quizy.svg"
@@ -366,7 +365,7 @@ export default function DashboardPage() {
                 className="w-16 flex-shrink-0"
                 priority
               />
-              <Separator orientation="vertical" className="max-h-4" />
+              <div className="w-[0.5px] bg-muted h-4" />
               <TabsList className="text-foreground h-auto gap-2 rounded-none bg-transparent px-0 py-1">
                 <TabsTrigger
                   value="funis"
@@ -384,7 +383,7 @@ export default function DashboardPage() {
             </div>
             <div className="my-1 space-x-4 flex justify-center items-center">
               <CommandMenu />
-              <Separator orientation="vertical" className="max-h-4" />
+              <div className="w-[0.5px] bg-muted h-4" />
               <UserProfile />
             </div>
           </div>
