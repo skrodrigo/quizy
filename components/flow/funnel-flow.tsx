@@ -15,8 +15,9 @@ import {
   useEdgesState,
   useNodesState,
 } from "@xyflow/react";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import "@xyflow/react/dist/style.css";
+import { useFunnel } from "@/contexts/funnel-context";
 import { CustomFunnelNode } from "./custom-funnel-node";
 import { DataEdge } from "./data-edge";
 import { GroupNode } from "./labeled-group-node";
@@ -38,59 +39,13 @@ const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 240;
 const nodeHeight = 100;
 
-const initialNodes: Node[] = [
-  {
-    id: "1",
-    type: "custom",
-    data: { label: "Etapa 1: Boas-vindas" },
-    position: { x: 0, y: 0 },
-  },
-  {
-    id: "2",
-    type: "custom",
-    data: { label: "Etapa 2: Captura de Lead" },
-    position: { x: 0, y: 0 },
-  },
-  {
-    id: "3",
-    type: "custom",
-    data: { label: "Etapa 3: Conversão" },
-    position: { x: 0, y: 0 },
-  },
-];
-
-const initialEdges: Edge[] = [
-  {
-    id: "e1-2",
-    source: "1",
-    target: "2",
-    type: "data",
-    data: {
-      path: "smoothstep",
-    },
-    animated: true,
-    className: "stroke-muted-foreground stroke-[2.5] [stroke-dasharray:8,4]",
-  },
-  {
-    id: "e2-3",
-    source: "2",
-    target: "3",
-    type: "data",
-    data: {
-      path: "smoothstep",
-    },
-    animated: true,
-    className: "stroke-muted-foreground stroke-[2.5] [stroke-dasharray:8,4]",
-  },
-];
-
 const getLayoutedElements = (
   nodes: Node[],
   edges: Edge[],
-  direction = "TB",
+  direction = "LR",
 ) => {
   const isHorizontal = direction === "LR";
-  dagreGraph.setGraph({ rankdir: direction });
+  dagreGraph.setGraph({ rankdir: direction, nodesep: 100, ranksep: 150 });
 
   nodes.forEach((node) => {
     dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -120,14 +75,39 @@ const getLayoutedElements = (
   return { nodes: newNodes, edges };
 };
 
-const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-  initialNodes,
-  initialEdges,
-);
-
 export function FunnelFlow() {
-  const [nodes, , onNodesChange] = useNodesState(layoutedNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
+  const { steps } = useFunnel();
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+
+  useEffect(() => {
+    const newNodes: Node[] = steps.map((step) => ({
+      id: step.id,
+      type: "custom",
+      data: { label: step.label },
+      position: { x: 0, y: 0 },
+    }));
+
+    const newEdges: Edge[] = steps.slice(0, -1).map((step, index) => ({
+      id: `e${step.id}-${steps[index + 1].id}`,
+      source: step.id,
+      target: steps[index + 1].id,
+      type: "data",
+      data: {
+        path: "smoothstep",
+      },
+      animated: true,
+      className: "stroke-muted-foreground stroke-[2.5] [stroke-dasharray:8,4]",
+    }));
+
+    const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+      newNodes,
+      newEdges,
+    );
+
+    setNodes(layoutedNodes);
+    setEdges(layoutedEdges);
+  }, [steps, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params: Connection) => {
@@ -163,9 +143,9 @@ export function FunnelFlow() {
           className: "stroke-muted-foreground stroke-[2.5] [stroke-dasharray:8,4]",
         }}
       >
-        <Background className="[&>*]:stroke-muted-foreground/20" />
-        <ZoomSlider position="bottom-left" className="bg-card/95 backdrop-blur-md border border-border rounded-xl shadow-lg" />
-        <MiniMap className="bg-card/95 backdrop-blur-md border border-border rounded-xl shadow-lg [&_.react-flow__minimap-mask]:fill-background/90 [&_.react-flow__minimap-node]:fill-muted [&_.react-flow__minimap-node]:stroke-muted-foreground" />
+        <Background className="[&>*]:stroke-muted-foreground/10" />
+        <ZoomSlider position="bottom-left" className="bg-card backdrop-blur-md border border-border rounded-xl" />
+        <MiniMap className="bg-card backdrop-blur-md border border-border rounded-xl" />
       </ReactFlow>
     </div>
   );

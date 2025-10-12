@@ -8,7 +8,7 @@ import {
   useViewport,
 } from "@xyflow/react";
 import { Maximize, Minus, Plus } from "lucide-react";
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";

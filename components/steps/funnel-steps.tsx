@@ -17,7 +17,14 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { IconDots, IconGripVertical, IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
+import {
+  IconDots,
+  IconGripVertical,
+  IconPencil,
+  IconPlus,
+  IconTrash,
+} from "@tabler/icons-react";
+import { useQueryState } from "nuqs";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,6 +35,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useFunnel } from "@/contexts/funnel-context";
 
 interface Step {
   id: string;
@@ -38,9 +46,17 @@ interface SortableStepProps {
   step: Step;
   onRename: (id: string, newLabel: string) => void;
   onDelete: (id: string) => void;
+  isSelected: boolean;
+  onSelect: (id: string) => void;
 }
 
-function SortableStep({ step, onRename, onDelete }: SortableStepProps) {
+function SortableStep({
+  step,
+  onRename,
+  onDelete,
+  isSelected,
+  onSelect,
+}: SortableStepProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: step.id });
   const [isEditing, setIsEditing] = useState(false);
@@ -99,7 +115,11 @@ function SortableStep({ step, onRename, onDelete }: SortableStepProps) {
     <div ref={setNodeRef} style={style} className="relative group w-full">
       <Button
         variant="outline"
-        className="w-[190px] justify-start gap-2 pr-10 overflow-hidden group/button"
+        className={`w-[190px] justify-start gap-2 pr-10 overflow-hidden group/button transition-all ${isSelected
+          ? "ring-2 ring-primary shadow-md opacity-100"
+          : "opacity-60 hover:opacity-100"
+          }`}
+        onClick={() => onSelect(step.id)}
         onDoubleClick={handleDoubleClick}
       >
         <div
@@ -139,7 +159,10 @@ function SortableStep({ step, onRename, onDelete }: SortableStepProps) {
             onSelect={() => onDelete(step.id)}
             className="text-destructive focus:text-destructive"
           >
-            <IconTrash stroke={2} className="size-4 mr-2 text-destructive focus:text-destructive" />
+            <IconTrash
+              stroke={2}
+              className="size-4 mr-2 text-destructive focus:text-destructive"
+            />
             Deletar
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -149,22 +172,16 @@ function SortableStep({ step, onRename, onDelete }: SortableStepProps) {
 }
 
 export function FunnelSteps() {
-  const [steps, setSteps] = useState<Step[]>([
-    { id: "1", label: "Etapa 1" },
-    { id: "2", label: "Etapa 2" },
-    { id: "3", label: "Etapa 3" },
-    { id: "4", label: "Etapa 4" },
-    { id: "5", label: "Etapa 5" },
-    { id: "6", label: "Etapa 6" },
-    { id: "7", label: "Etapa 7" },
-    { id: "8", label: "Etapa 8" },
-    { id: "9", label: "Etapa 9" },
-    { id: "10", label: "Etapa 10" },
-    { id: "11", label: "Etapa 11" },
-
-
-  ]);
-
+  const {
+    steps,
+    addStep,
+    deleteStep,
+    renameStep,
+    reorderSteps,
+    selectedStepId,
+    setSelectedStepId,
+  } = useFunnel();
+  const [stepId, setStepId] = useQueryState("step");
   const [showTopFade, setShowTopFade] = useState(false);
   const [showBottomFade, setShowBottomFade] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -175,6 +192,18 @@ export function FunnelSteps() {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  useEffect(() => {
+    if (stepId && stepId !== selectedStepId) {
+      setSelectedStepId(stepId);
+    }
+  }, [stepId, selectedStepId, setSelectedStepId]);
+
+  useEffect(() => {
+    if (selectedStepId !== stepId) {
+      setStepId(selectedStepId);
+    }
+  }, [selectedStepId, stepId, setStepId]);
 
   useEffect(() => {
     const scrollElement = scrollRef.current?.querySelector(
@@ -202,27 +231,14 @@ export function FunnelSteps() {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      setSteps((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over.id);
-        return arrayMove(items, oldIndex, newIndex);
-      });
+      const oldIndex = steps.findIndex((item) => item.id === active.id);
+      const newIndex = steps.findIndex((item) => item.id === over.id);
+      reorderSteps(arrayMove(steps, oldIndex, newIndex));
     }
   };
 
-  const handleAddStep = () => {
-    const newId = String(steps.length + 1);
-    setSteps([...steps, { id: newId, label: `Etapa ${newId}` }]);
-  };
-
-  const handleRename = (id: string, newLabel: string) => {
-    setSteps((items) =>
-      items.map((item) => (item.id === id ? { ...item, label: newLabel } : item))
-    );
-  };
-
-  const handleDelete = (id: string) => {
-    setSteps((items) => items.filter((item) => item.id !== id));
+  const handleSelectStep = (id: string) => {
+    setSelectedStepId(id);
   };
 
   return (
@@ -246,8 +262,10 @@ export function FunnelSteps() {
                 <SortableStep
                   key={step.id}
                   step={step}
-                  onRename={handleRename}
-                  onDelete={handleDelete}
+                  onRename={renameStep}
+                  onDelete={deleteStep}
+                  isSelected={selectedStepId === step.id}
+                  onSelect={handleSelectStep}
                 />
               ))}
             </SortableContext>
@@ -256,7 +274,7 @@ export function FunnelSteps() {
           <Button
             variant="link"
             className="w-full justify-center mb-2"
-            onClick={handleAddStep}
+            onClick={addStep}
           >
             <IconPlus stroke={2} className="size-4" />
             <span className="text-foreground">Adicionar Etapa</span>
