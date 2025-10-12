@@ -19,7 +19,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { IconTrash } from "@tabler/icons-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import type { WidgetConfig } from "@/components/widgets/types";
@@ -113,6 +113,8 @@ export function FunnelEditor() {
     deleteWidget,
   } = useFunnel();
 
+  const editorContentRef = useRef<HTMLDivElement>(null);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -121,6 +123,12 @@ export function FunnelEditor() {
   );
 
   const currentStep = steps.find((step) => step.id === selectedStepId);
+
+  const handleEditorClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === editorContentRef.current) {
+      setSelectedWidgetId(null);
+    }
+  };
 
   if (!currentStep) {
     return toast.error("Etapa não encontrada");
@@ -153,8 +161,19 @@ export function FunnelEditor() {
 
   return (
     <div className="flex-1 overflow-auto">
-      <div className="px-12">
-        <div className="bg-background rounded-lg shadow-sm h-full p-6 space-y-4">
+      <div className="px-12 h-full">
+        <div
+          ref={editorContentRef}
+          onClick={handleEditorClick}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setSelectedWidgetId(null);
+            }
+          }}
+          role="region"
+          tabIndex={-1}
+          className="bg-background rounded-lg shadow-sm h-full p-6 space-y-4"
+        >
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
