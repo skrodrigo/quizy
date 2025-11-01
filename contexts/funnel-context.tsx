@@ -68,11 +68,112 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
 
   const addWidget = (stepId: string, type: string) => {
     const widgetId = String(Date.now());
+    
+    const getDefaultContent = (widgetType: string) => {
+      switch (widgetType) {
+        case "cartesiano":
+          return {
+            title: "Gráfico",
+            dataPoints: [],
+            chartType: "area",
+          };
+        case "carrosel":
+          return {
+            items: [
+              { id: "1", image: "", alt: "Slide 1" },
+              { id: "2", image: "", alt: "Slide 2" },
+              { id: "3", image: "", alt: "Slide 3" },
+            ],
+            autoplay: false,
+            interval: 3000,
+            aspectRatio: "video",
+          };
+        case "termos":
+          return {
+            text: "Ao clicar em alguma das opções, você concorda com os",
+            terms: [],
+          };
+        case "preco":
+          return {
+            title: "Plano Premium",
+            price: 99.90,
+            currency: "R$",
+            period: "à vista",
+            badge: "",
+          };
+        case "audio":
+          return {
+            url: "",
+            style: "whatsapp",
+            duration: "0:00",
+            autoplay: false,
+          };
+        case "opcao":
+          return {
+            options: [
+              { id: "1", label: "Opção 1", value: "opcao1" },
+              { id: "2", label: "Opção 2", value: "opcao2" },
+              { id: "3", label: "Opção 3", value: "opcao3" },
+            ],
+            multiple: false,
+            columns: 2,
+          };
+        case "argumento":
+          return {
+            arguments: [
+              {
+                id: "1",
+                title: "Argumento 1",
+                description: "Descrição do primeiro argumento",
+                image: "",
+              },
+              {
+                id: "2",
+                title: "Argumento 2",
+                description: "Descrição do segundo argumento",
+                image: "",
+              },
+              {
+                id: "3",
+                title: "Argumento 3",
+                description: "Descrição do terceiro argumento",
+                image: "",
+              },
+            ],
+            columns: 3,
+          };
+        case "captura":
+          return {
+            fields: [
+              {
+                name: "nome",
+                type: "text",
+                label: "Nome",
+                placeholder: "Digite seu nome",
+                required: true,
+              },
+              {
+                name: "email",
+                type: "email",
+                label: "E-mail",
+                placeholder: "seu@email.com",
+                required: true,
+              },
+            ],
+            submitLabel: "Enviar",
+            image: "",
+            imageAspectRatio: "video",
+          };
+        default:
+          return {};
+      }
+    };
+
     const newWidget: WidgetConfig = {
       id: widgetId,
       type,
       style: {},
-      content: {},
+      content: getDefaultContent(type),
     };
 
     setSteps((prevSteps) =>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Color from "color";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +13,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  ColorPicker,
+  ColorPickerSelection,
+  ColorPickerHue,
+  ColorPickerAlpha,
+  ColorPickerEyeDropper,
+  ColorPickerOutput,
+  ColorPickerFormat,
+} from "@/components/color-pick";
 import { useFunnel } from "@/contexts/funnel-context";
 
 export function FunnelPropertiesPanel() {
@@ -309,26 +324,114 @@ export function FunnelPropertiesPanel() {
           {activeTab === "estilo" && (
             <>
               <div className="space-y-2">
-                <Label htmlFor="bg-color">Cor de fundo</Label>
-                <Input
-                  type="color"
-                  id="bg-color"
-                  className="h-10 w-full"
-                  value={selectedWidget?.style?.backgroundColor || "#ffffff"}
-                  onChange={(e) => handleUpdateStyle("backgroundColor", e.target.value)}
-                  disabled={!selectedWidget}
-                />
+                <Label>Largura</Label>
+                <div className="space-y-3">
+                  <input
+                    type="range"
+                    min="10"
+                    max="100"
+                    step="5"
+                    value={parseInt(selectedWidget?.style?.width?.replace("%", "") || "100")}
+                    onChange={(e) => handleUpdateStyle("width", `${e.target.value}%`)}
+                    className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                    disabled={!selectedWidget}
+                  />
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">10%</span>
+                    <span className="font-medium text-primary">
+                      {selectedWidget?.style?.width || "100%"}
+                    </span>
+                    <span className="text-muted-foreground">100%</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Ajuste a largura para colocar múltiplos widgets lado a lado
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Cor de fundo</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start gap-2 h-10"
+                      disabled={!selectedWidget}
+                    >
+                      <div
+                        className="h-5 w-5 rounded border"
+                        style={{
+                          backgroundColor: selectedWidget?.style?.backgroundColor || "#ffffff",
+                        }}
+                      />
+                      <span className="text-sm">
+                        {selectedWidget?.style?.backgroundColor || "#ffffff"}
+                      </span>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <ColorPicker
+                      value={selectedWidget?.style?.backgroundColor || "#ffffff"}
+                      onChange={(value) => {
+                        const color = Color.rgb(value).hex();
+                        handleUpdateStyle("backgroundColor", color);
+                      }}
+                    >
+                      <ColorPickerSelection />
+                      <div className="space-y-3">
+                        <ColorPickerHue />
+                        <ColorPickerAlpha />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <ColorPickerEyeDropper />
+                        <ColorPickerFormat className="flex-1" />
+                        <ColorPickerOutput />
+                      </div>
+                    </ColorPicker>
+                  </PopoverContent>
+                </Popover>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="text-color">Cor do texto</Label>
-                <Input
-                  type="color"
-                  id="text-color"
-                  className="h-10 w-full"
-                  value={selectedWidget?.style?.textColor || "#000000"}
-                  onChange={(e) => handleUpdateStyle("textColor", e.target.value)}
-                  disabled={!selectedWidget}
-                />
+                <Label>Cor do texto</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start gap-2 h-10"
+                      disabled={!selectedWidget}
+                    >
+                      <div
+                        className="h-5 w-5 rounded border"
+                        style={{
+                          backgroundColor: selectedWidget?.style?.textColor || "#000000",
+                        }}
+                      />
+                      <span className="text-sm">
+                        {selectedWidget?.style?.textColor || "#000000"}
+                      </span>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <ColorPicker
+                      value={selectedWidget?.style?.textColor || "#000000"}
+                      onChange={(value) => {
+                        const color = Color.rgb(value).hex();
+                        handleUpdateStyle("textColor", color);
+                      }}
+                    >
+                      <ColorPickerSelection />
+                      <div className="space-y-3">
+                        <ColorPickerHue />
+                        <ColorPickerAlpha />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <ColorPickerEyeDropper />
+                        <ColorPickerFormat className="flex-1" />
+                        <ColorPickerOutput />
+                      </div>
+                    </ColorPicker>
+                  </PopoverContent>
+                </Popover>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="border-radius">Borda arredondada</Label>

@@ -2,6 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { LoadingWidgetContent, WidgetStyle } from "../types";
 
 interface LoadingWidgetConfigProps {
@@ -30,20 +31,21 @@ export function LoadingWidgetConfig({
 
       <div className="space-y-2">
         <Label>Variante</Label>
-        <select
-          className="w-full h-10 px-3 rounded-md border border-input bg-background"
+        <Tabs
           value={content.variant || "spinner"}
-          onChange={(e) =>
+          onValueChange={(value) =>
             onContentChange({
               ...content,
-              variant: e.target.value as "spinner" | "dots" | "pulse",
+              variant: value as "spinner" | "dots" | "pulse",
             })
           }
         >
-          <option value="spinner">Spinner</option>
-          <option value="dots">Dots</option>
-          <option value="pulse">Pulse</option>
-        </select>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="spinner">Spinner</TabsTrigger>
+            <TabsTrigger value="dots">Dots</TabsTrigger>
+            <TabsTrigger value="pulse">Pulse</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
     </div>
   );

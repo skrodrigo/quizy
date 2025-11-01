@@ -80,8 +80,9 @@ function SortableWidget({
             handleClick();
           }
         }}
-        className={`w-full cursor-grab active:cursor-grabbing transition-all ${isSelected
-          ? "border border-chart-3"
+        style={{ width: widget.style.width || "100%" }}
+        className={`cursor-grab active:cursor-grabbing  ${isSelected
+          ? "border border-chart-3 border-dashed"
           : "hover:ring-2 hover:ring-muted-foreground/20"
           }`}
       >

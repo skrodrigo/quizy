@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { OptionWidgetContent, WidgetStyle } from "../types";
 
 interface OptionWidgetConfigProps {
@@ -47,6 +48,26 @@ export function OptionWidgetConfig({
 
   return (
     <div className="space-y-4">
+      <div className="space-y-2">
+        <Label>Colunas</Label>
+        <Select
+          value={String(content.columns || 2)}
+          onValueChange={(value) =>
+            onContentChange({ ...content, columns: Number(value) as 1 | 2 | 3 | 4 })
+          }
+        >
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="1">1 coluna</SelectItem>
+            <SelectItem value="2">2 colunas</SelectItem>
+            <SelectItem value="3">3 colunas</SelectItem>
+            <SelectItem value="4">4 colunas</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
       <div className="flex items-center space-x-2">
         <Checkbox
           checked={content.multiple || false}

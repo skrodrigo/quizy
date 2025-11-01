@@ -71,10 +71,12 @@ export interface FAQWidgetContent extends WidgetContent {
 export interface CarouselWidgetContent extends WidgetContent {
   items: Array<{
     id: string;
-    content: unknown;
+    image: string;
+    alt?: string;
   }>;
   autoplay?: boolean;
   interval?: number;
+  aspectRatio?: "square" | "video" | "portrait";
 }
 
 export interface TestimonialWidgetContent extends WidgetContent {
@@ -96,6 +98,8 @@ export interface CaptureWidgetContent extends WidgetContent {
     required?: boolean;
   }>;
   submitLabel: string;
+  image?: string;
+  imageAspectRatio?: "square" | "video" | "portrait";
 }
 
 export interface SpacerWidgetContent extends WidgetContent {
@@ -106,12 +110,16 @@ export interface AudioWidgetContent extends WidgetContent {
   url: string;
   autoplay?: boolean;
   controls?: boolean;
+  style?: "whatsapp" | "instagram";
+  duration?: string;
 }
 
 export interface PriceWidgetContent extends WidgetContent {
+  title: string;
   price: number;
   currency: string;
   period?: string;
+  badge?: string;
   features?: string[];
 }
 
@@ -141,14 +149,17 @@ export interface OptionWidgetContent extends WidgetContent {
     value: string;
   }>;
   multiple?: boolean;
+  columns?: 1 | 2 | 3 | 4;
 }
 
 export interface ArgumentWidgetContent extends WidgetContent {
   arguments: Array<{
+    id: string;
     title: string;
     description: string;
-    icon?: string;
+    image?: string;
   }>;
+  columns?: 1 | 2 | 3 | 4;
 }
 
 export interface NotificationWidgetContent extends WidgetContent {
@@ -170,4 +181,27 @@ export interface WeightWidgetContent extends WidgetContent {
 export interface HeightWidgetContent extends WidgetContent {
   value: number;
   unit: "cm" | "m" | "ft" | "in";
+}
+
+export interface CartesianChartWidgetContent extends WidgetContent {
+  title: string;
+  dataPoints: Array<{
+    label: string;
+    value: number;
+    formula?: string;
+  }>;
+  chartType: "area" | "line" | "bar";
+  xAxisLabel?: string;
+  yAxisLabel?: string;
+  showGrid?: boolean;
+  showTooltip?: boolean;
+  colorScheme?: "default" | "gradient" | "custom";
+}
+
+export interface TermsWidgetContent extends WidgetContent {
+  text: string;
+  terms: Array<{
+    label: string;
+    url: string;
+  }>;
 }

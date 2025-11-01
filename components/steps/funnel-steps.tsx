@@ -25,7 +25,7 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { useQueryState } from "nuqs";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -212,18 +212,27 @@ export function FunnelSteps() {
     }
   }, [selectedStepId, stepId, setStepId]);
 
-  useEffect(() => {
+  const handleScroll = useCallback(() => {
     const scrollElement = scrollRef.current?.querySelector(
       "[data-radix-scroll-area-viewport]",
     );
 
     if (!scrollElement) return;
 
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = scrollElement;
-      setShowTopFade(scrollTop > 0);
-      setShowBottomFade(scrollTop + clientHeight < scrollHeight - 1);
-    };
+    const { scrollTop, scrollHeight, clientHeight } = scrollElement;
+    const newShowTopFade = scrollTop > 0;
+    const newShowBottomFade = scrollTop + clientHeight < scrollHeight - 1;
+    
+    setShowTopFade((prev) => prev !== newShowTopFade ? newShowTopFade : prev);
+    setShowBottomFade((prev) => prev !== newShowBottomFade ? newShowBottomFade : prev);
+  }, []);
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current?.querySelector(
+      "[data-radix-scroll-area-viewport]",
+    );
+
+    if (!scrollElement) return;
 
     const timeoutId = setTimeout(handleScroll, 100);
     scrollElement.addEventListener("scroll", handleScroll);
@@ -232,7 +241,7 @@ export function FunnelSteps() {
       clearTimeout(timeoutId);
       scrollElement.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;

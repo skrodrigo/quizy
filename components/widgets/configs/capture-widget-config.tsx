@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { CaptureWidgetContent, WidgetStyle } from "../types";
 
 interface CaptureWidgetConfigProps {
@@ -46,6 +47,34 @@ export function CaptureWidgetConfig({
 
   return (
     <div className="space-y-4">
+      <div className="space-y-2">
+        <Label>URL da Imagem</Label>
+        <Input
+          value={content.image || ""}
+          onChange={(e) => onContentChange({ ...content, image: e.target.value })}
+          placeholder="https://exemplo.com/imagem.jpg"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label>Proporção da Imagem</Label>
+        <Select
+          value={content.imageAspectRatio || "video"}
+          onValueChange={(value) =>
+            onContentChange({ ...content, imageAspectRatio: value as "square" | "video" | "portrait" })
+          }
+        >
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="square">Quadrado (1:1)</SelectItem>
+            <SelectItem value="video">Vídeo (16:9)</SelectItem>
+            <SelectItem value="portrait">Retrato (3:4)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
       <div className="space-y-2">
         <Label>Texto do Botão</Label>
         <Input

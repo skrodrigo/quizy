@@ -1,5 +1,7 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -9,6 +11,7 @@ import {
   ButtonWidgetConfig,
   CaptureWidgetConfig,
   CarouselWidgetConfig,
+  CartesianChartWidgetConfig,
   ChartWidgetConfig,
   FAQWidgetConfig,
   HeightWidgetConfig,
@@ -20,6 +23,7 @@ import {
   PriceWidgetConfig,
   ProgressWidgetConfig,
   SpacerWidgetConfig,
+  TermsWidgetConfig,
   TestimonialWidgetConfig,
   TextWidgetConfig,
   TimerWidgetConfig,
@@ -72,6 +76,8 @@ export function WidgetConfigPanel({
         return <CaptureWidgetConfig {...props} />;
       case "carrosel":
         return <CarouselWidgetConfig {...props} />;
+      case "cartesiano":
+        return <CartesianChartWidgetConfig {...props} />;
       case "depoimentos":
         return <TestimonialWidgetConfig {...props} />;
       case "espaco":
@@ -94,6 +100,8 @@ export function WidgetConfigPanel({
         return <PriceWidgetConfig {...props} />;
       case "progresso":
         return <ProgressWidgetConfig {...props} />;
+      case "termos":
+        return <TermsWidgetConfig {...props} />;
       case "texto":
         return <TextWidgetConfig {...props} />;
       case "timer":
@@ -135,9 +143,46 @@ export function WidgetConfigPanel({
 
           <TabsContent value="style" className="p-4 m-0">
             <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Estilos específicos do widget
-              </p>
+              <div className="space-y-2">
+                <Label>Largura (%)</Label>
+                <div className="space-y-2">
+                  <Input
+                    type="number"
+                    min="10"
+                    max="100"
+                    value={parseInt(widget.style.width?.replace("%", "") || "100")}
+                    onChange={(e) => {
+                      const value = Math.min(100, Math.max(10, parseInt(e.target.value) || 100));
+                      onUpdate({
+                        ...widget,
+                        style: { ...widget.style, width: `${value}%` },
+                      });
+                    }}
+                  />
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="range"
+                      min="10"
+                      max="100"
+                      step="5"
+                      value={parseInt(widget.style.width?.replace("%", "") || "100")}
+                      onChange={(e) => {
+                        onUpdate({
+                          ...widget,
+                          style: { ...widget.style, width: `${e.target.value}%` },
+                        });
+                      }}
+                      className="flex-1"
+                    />
+                    <span className="text-sm text-muted-foreground w-12 text-right">
+                      {widget.style.width || "100%"}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Ajuste a largura para colocar múltiplos widgets lado a lado
+                </p>
+              </div>
             </div>
           </TabsContent>
         </ScrollArea>

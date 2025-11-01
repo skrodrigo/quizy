@@ -42,6 +42,28 @@ export function PriceWidgetConfig({
   return (
     <div className="space-y-4">
       <div className="space-y-2">
+        <Label>Título do Plano</Label>
+        <Input
+          value={content.title}
+          onChange={(e) =>
+            onContentChange({ ...content, title: e.target.value })
+          }
+          placeholder="Plano Premium"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label>Badge (opcional)</Label>
+        <Input
+          value={content.badge || ""}
+          onChange={(e) =>
+            onContentChange({ ...content, badge: e.target.value })
+          }
+          placeholder="15% Off"
+        />
+      </div>
+
+      <div className="space-y-2">
         <Label>Preço</Label>
         <Input
           type="number"
@@ -49,7 +71,7 @@ export function PriceWidgetConfig({
           onChange={(e) =>
             onContentChange({ ...content, price: Number(e.target.value) })
           }
-          placeholder="99.90"
+          placeholder="39.90"
         />
       </div>
 
@@ -71,7 +93,7 @@ export function PriceWidgetConfig({
           onChange={(e) =>
             onContentChange({ ...content, period: e.target.value })
           }
-          placeholder="/mês"
+          placeholder="à vista"
         />
       </div>
 
