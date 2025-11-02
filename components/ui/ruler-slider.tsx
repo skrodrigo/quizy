@@ -96,8 +96,8 @@ export function RulerSlider({
               isMainTick
                 ? "h-8 w-0.5"
                 : isMediumTick
-                ? "h-6 w-0.5"
-                : "h-4 w-px"
+                  ? "h-6 w-0.5"
+                  : "h-4 w-px"
             )}
           />
           {isMainTick && (
@@ -132,8 +132,11 @@ export function RulerSlider({
         <div className="absolute inset-0">{renderTicks()}</div>
 
         <div className="absolute top-0 left-1/2 -translate-x-1/2 h-full w-0.5 bg-foreground pointer-events-none z-10">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[12px] border-l-transparent border-r-transparent border-t-foreground" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-b-[16px] border-l-transparent border-r-transparent border-b-foreground" />
         </div>
+
+        {/* Linha horizontal embaixo do triângulo */}
+        <div className="absolute bottom-[-3px] left-1/2 -translate-x-1/2 w-full  h-1 bg-muted pointer-events-none z-20" />
       </div>
 
       <div className="text-center text-muted-foreground text-sm">

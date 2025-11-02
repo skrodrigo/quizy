@@ -1,22 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import {
+  IconPlayerPlay,
+  IconStar,
+  IconStarFilled,
+  IconUpload,
+  IconUser,
+} from "@tabler/icons-react";
 import { LoaderIcon } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { RulerSlider } from "@/components/ui/ruler-slider";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { CartesianChartRenderer } from "@/components/widgets/renderers/cartesian-chart-renderer";
 import type {
   ArgumentWidgetContent,
   CaptureWidgetContent,
-  CartesianChartWidgetContent,
   CarouselWidgetContent,
+  CartesianChartWidgetContent,
   LoadingWidgetContent,
   OptionWidgetContent,
   TermsWidgetContent,
@@ -71,7 +82,7 @@ function LoadingWidgetRenderer({ content }: { content: LoadingWidgetContent }) {
 function WeightWidgetRenderer({ widget }: WidgetRendererProps) {
   const content = widget.content as {
     value?: number;
-    unit?: "kg" | "lb" | "g";
+    unit?: "kg" | "lb";
   };
   const [value, setValue] = useState(content.value || 70);
   const [unit, setUnit] = useState(content.unit || "kg");
@@ -82,8 +93,6 @@ function WeightWidgetRenderer({ widget }: WidgetRendererProps) {
         return { min: 20, max: 200, step: 0.5 };
       case "lb":
         return { min: 40, max: 440, step: 1 };
-      case "g":
-        return { min: 20000, max: 200000, step: 100 };
       default:
         return { min: 20, max: 200, step: 0.5 };
     }
@@ -92,26 +101,56 @@ function WeightWidgetRenderer({ widget }: WidgetRendererProps) {
   const { min, max, step } = getMinMax(unit);
 
   return (
-    <div className="p-6 space-y-4">
-      <Tabs
-        value={unit}
-        onValueChange={(value) => setUnit(value as "kg" | "lb" | "g")}
-      >
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="kg">kg</TabsTrigger>
-          <TabsTrigger value="lb">lb</TabsTrigger>
-          <TabsTrigger value="g">g</TabsTrigger>
-        </TabsList>
-      </Tabs>
+    <div className="p-6 max-w-md mx-auto">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border">
+        {/* Tabs de unidade */}
+        <div className="flex justify-center mb-6">
+          <div className="flex bg-gray-100 dark:bg-slate-800 rounded-full p-1">
+            <button
+              type="button"
+              onClick={() => setUnit("kg")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                unit === "kg"
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+              }`}
+            >
+              kg
+            </button>
+            <button
+              type="button"
+              onClick={() => setUnit("lb")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                unit === "lb"
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+              }`}
+            >
+              lb
+            </button>
+          </div>
+        </div>
 
-      <RulerSlider
-        value={value}
-        onChange={setValue}
-        min={min}
-        max={max}
-        step={step}
-        unit={unit}
-      />
+        {/* Valor principal */}
+        <div className="text-center mb-8">
+          <div className="text-5xl font-light text-gray-900 dark:text-white">
+            {value}
+            <span className="text-2xl text-gray-500 dark:text-gray-400 ml-1">
+              {unit}
+            </span>
+          </div>
+        </div>
+
+        {/* Ruler Slider */}
+        <RulerSlider
+          value={value}
+          onChange={setValue}
+          min={min}
+          max={max}
+          step={step}
+          unit=""
+        />
+      </div>
     </div>
   );
 }
@@ -119,20 +158,16 @@ function WeightWidgetRenderer({ widget }: WidgetRendererProps) {
 function HeightWidgetRenderer({ widget }: WidgetRendererProps) {
   const content = widget.content as {
     value?: number;
-    unit?: "cm" | "m" | "ft" | "in";
+    unit?: "cm" | "pol";
   };
-  const [value, setValue] = useState(content.value || 170);
+  const [value, setValue] = useState(content.value || 180);
   const [unit, setUnit] = useState(content.unit || "cm");
 
   const getMinMax = (unit: string) => {
     switch (unit) {
       case "cm":
         return { min: 50, max: 250, step: 1 };
-      case "m":
-        return { min: 0.5, max: 2.5, step: 0.01 };
-      case "ft":
-        return { min: 2, max: 8, step: 0.1 };
-      case "in":
+      case "pol":
         return { min: 20, max: 100, step: 1 };
       default:
         return { min: 50, max: 250, step: 1 };
@@ -142,27 +177,56 @@ function HeightWidgetRenderer({ widget }: WidgetRendererProps) {
   const { min, max, step } = getMinMax(unit);
 
   return (
-    <div className="p-6 space-y-4">
-      <Tabs
-        value={unit}
-        onValueChange={(value) => setUnit(value as "cm" | "m" | "ft" | "in")}
-      >
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="cm">cm</TabsTrigger>
-          <TabsTrigger value="m">m</TabsTrigger>
-          <TabsTrigger value="ft">ft</TabsTrigger>
-          <TabsTrigger value="in">in</TabsTrigger>
-        </TabsList>
-      </Tabs>
+    <div className="p-6 max-w-md mx-auto">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border">
+        {/* Tabs de unidade */}
+        <div className="flex justify-center mb-6">
+          <div className="flex bg-gray-100 dark:bg-slate-800 rounded-full p-1">
+            <button
+              type="button"
+              onClick={() => setUnit("cm")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                unit === "cm"
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+              }`}
+            >
+              cm
+            </button>
+            <button
+              type="button"
+              onClick={() => setUnit("pol")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                unit === "pol"
+                  ? "bg-black text-white dark:bg-white dark:text-black"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+              }`}
+            >
+              pol
+            </button>
+          </div>
+        </div>
 
-      <RulerSlider
-        value={value}
-        onChange={setValue}
-        min={min}
-        max={max}
-        step={step}
-        unit={unit}
-      />
+        {/* Valor principal */}
+        <div className="text-center mb-8">
+          <div className="text-5xl font-light text-gray-900 dark:text-white">
+            {value}
+            <span className="text-2xl text-gray-500 dark:text-gray-400 ml-1">
+              {unit}
+            </span>
+          </div>
+        </div>
+
+        {/* Ruler Slider */}
+        <RulerSlider
+          value={value}
+          onChange={setValue}
+          min={min}
+          max={max}
+          step={step}
+          unit=""
+        />
+      </div>
     </div>
   );
 }
@@ -252,16 +316,16 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
         return (
           <div className="p-4 max-w-xs">
             <div className="bg-[#1f2c33] rounded-lg p-3 flex items-center gap-3">
-              <button type="button" className="size-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
-                <svg className="size-4 text-white" fill="currentColor" viewBox="0 0 24 24" aria-label="Play">
-                  <title>Play</title>
-                  <path d="M8 5v14l11-7z" />
-                </svg>
+              <button
+                type="button"
+                className="size-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+              >
+                <IconPlayerPlay className="size-4 text-white" />
               </button>
-              
+
               <div className="flex-1 flex items-center gap-2">
                 <div className="flex-1 flex items-center gap-0.5 h-8">
-                  {Array.from({ length: 40 }).map((_, i) => (
+                  {Array.from({ length: 40 }, (_, i) => (
                     <div
                       key={`waveform-${i}`}
                       className="w-0.5 bg-white/30 rounded-full transition-all"
@@ -285,16 +349,16 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
       return (
         <div className="p-4 max-w-2xl">
           <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 flex items-center gap-6">
-            <button type="button" className="size-16 rounded-full bg-white hover:bg-white/90 flex items-center justify-center transition-colors shadow-lg">
-              <svg className="size-8 text-slate-900 ml-1" fill="currentColor" viewBox="0 0 24 24" aria-label="Play">
-                <title>Play</title>
-                <path d="M8 5v14l11-7z" />
-              </svg>
+            <button
+              type="button"
+              className="size-16 rounded-full bg-white hover:bg-white/90 flex items-center justify-center transition-colors shadow-lg"
+            >
+              <IconPlayerPlay className="size-8 text-slate-900 ml-1" />
             </button>
-            
+
             <div className="flex-1 space-y-3">
               <div className="flex items-center gap-1 h-16">
-                {Array.from({ length: 60 }).map((_, i) => (
+                {Array.from({ length: 60 }, (_, i) => (
                   <div
                     key={`wave-${i}`}
                     className="w-1 bg-white rounded-full transition-all"
@@ -305,14 +369,15 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                   />
                 ))}
               </div>
-              <button type="button" className="text-white/80 hover:text-white text-sm transition-colors">
+              <button
+                type="button"
+                className="text-white/80 hover:text-white text-sm transition-colors"
+              >
                 Ver transcrição
               </button>
             </div>
 
-            <span className="text-white text-lg font-medium">
-              {duration}
-            </span>
+            <span className="text-white text-lg font-medium">{duration}</span>
           </div>
         </div>
       );
@@ -348,7 +413,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
         currency?: string;
         period?: string;
       };
-      
+
       return (
         <div className="w-full max-w-md mx-auto overflow-hidden rounded-lg border bg-card">
           <div className="bg-foreground px-6 py-3 text-center">
@@ -356,14 +421,14 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
               {priceContent.title || "Mais Popular"}
             </h3>
           </div>
-          
+
           <div className="p-6 flex items-start justify-between gap-4">
             <div className="flex-1">
               <h2 className="font-bold text-2xl">
                 {priceContent.title || "Plano Premium"}
               </h2>
             </div>
-            
+
             <div className="rounded-lg bg-muted px-4 py-3 text-right">
               {priceContent.badge && (
                 <p className="text-muted-foreground text-xs mb-1">
@@ -420,14 +485,16 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                   <div className="p-2">
                     <AspectRatio ratio={ratio}>
                       {item.image ? (
-                        <img
+                        <Image
                           src={item.image}
                           alt={item.alt || "Slide"}
                           className="w-full h-full object-cover rounded-lg"
                         />
                       ) : (
                         <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center">
-                          <p className="text-muted-foreground">Adicione uma imagem</p>
+                          <p className="text-muted-foreground">
+                            Adicione uma imagem
+                          </p>
                         </div>
                       )}
                     </AspectRatio>
@@ -454,11 +521,12 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
       return (
         <div className="p-6 text-center">
           <p className="text-muted-foreground text-sm mb-2">
-            {termsContent.text || "Ao clicar em alguma das opções, você concorda com os"}
+            {termsContent.text ||
+              "Ao clicar em alguma das opções, você concorda com os"}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-1 text-sm">
             {termsContent.terms?.map((term, index) => (
-              <span key={index}>
+              <span key={term.label}>
                 <a
                   href={term.url}
                   target="_blank"
@@ -494,7 +562,10 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
           <RadioGroup defaultValue={optionContent.options?.[0]?.id}>
             <div className={`grid ${gridCols} gap-4`}>
               {optionContent.options?.map((option) => (
-                <div key={option.id} className="flex items-center gap-3 p-4 border rounded-lg hover:bg-accent transition-colors">
+                <div
+                  key={option.id}
+                  className="flex items-center gap-3 p-4 border rounded-lg hover:bg-accent transition-colors"
+                >
                   <RadioGroupItem value={option.id} id={option.id} />
                   <label
                     htmlFor={option.id}
@@ -510,12 +581,39 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
       );
     }
 
-    case "argumento": {
+    case "argumentos": {
       const argumentContent = widget.content as ArgumentWidgetContent;
+      
+      // Dados de exemplo para quando não há argumentos configurados
+      const defaultArgs = [
+        {
+          id: "1",
+          title: "Qualidade Premium",
+          description: "Produtos de alta qualidade com materiais selecionados e acabamento impecável.",
+          image: ""
+        },
+        {
+          id: "2", 
+          title: "Entrega Rápida",
+          description: "Receba seus produtos em até 24h com nosso sistema de entrega expressa.",
+          image: ""
+        },
+        {
+          id: "3",
+          title: "Garantia Total",
+          description: "100% de garantia de satisfação ou seu dinheiro de volta sem complicações.",
+          image: ""
+        }
+      ];
+
+      const argsList = argumentContent.arguments && argumentContent.arguments.length > 0 
+        ? argumentContent.arguments 
+        : defaultArgs;
+
       const columns = argumentContent.columns || 3;
       const gridCols = {
         1: "grid-cols-1",
-        2: "grid-cols-2",
+        2: "grid-cols-2", 
         3: "grid-cols-3",
         4: "grid-cols-4",
       }[columns];
@@ -523,11 +621,14 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
       return (
         <div className="p-6">
           <div className={`grid ${gridCols} gap-6`}>
-            {argumentContent.arguments?.map((arg) => (
-              <div key={arg.id} className="flex flex-col gap-4 p-6 border rounded-xl hover:shadow-lg transition-shadow bg-card">
+            {argsList.map((arg) => (
+              <div
+                key={arg.id}
+                className="flex flex-col gap-4 p-6 border rounded-xl hover:shadow-lg transition-shadow bg-card"
+              >
                 {arg.image && (
                   <div className="w-full aspect-video rounded-lg overflow-hidden bg-muted">
-                    <img
+                    <Image
                       src={arg.image}
                       alt={arg.title}
                       className="w-full h-full object-cover"
@@ -552,41 +653,127 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
         video: 16 / 9,
         portrait: 3 / 4,
       };
-      const ratio = aspectRatioMap[captureContent.imageAspectRatio || "video"];
+      const ratio = aspectRatioMap[captureContent.imageAspectRatio || "square"];
 
       return (
-        <div className="p-6 max-w-2xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6">
-            {captureContent.image && (
-              <div className="w-full">
-                <AspectRatio ratio={ratio}>
-                  <img
-                    src={captureContent.image}
-                    alt="Captura"
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                </AspectRatio>
+        <div className="p-6 max-w-md mx-auto">
+          <AspectRatio ratio={ratio}>
+            {captureContent.image ? (
+              <div className="relative w-full h-full rounded-lg overflow-hidden bg-muted">
+                <Image
+                  src={captureContent.image}
+                  alt="Imagem capturada"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Button variant="secondary" size="sm">
+                    Alterar imagem
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="w-full h-full border-2 border-dashed border-muted-foreground/25 rounded-lg flex flex-col items-center justify-center gap-4 bg-muted/50 hover:bg-muted/75 transition-colors cursor-pointer">
+                <IconUpload className="w-12 h-12 text-muted-foreground" />
+                <div className="text-center">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Anexar imagem
+                  </p>
+                  <p className="text-xs text-muted-foreground/75 mt-1">
+                    Clique ou arraste uma imagem
+                  </p>
+                </div>
               </div>
             )}
-            <div className="space-y-4">
-              {captureContent.fields?.map((field) => (
-                <div key={field.name} className="space-y-2">
-                  <Label htmlFor={field.name}>
-                    {field.label}
-                    {field.required && <span className="text-destructive ml-1">*</span>}
-                  </Label>
-                  <Input
-                    id={field.name}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    required={field.required}
-                  />
+          </AspectRatio>
+        </div>
+      );
+    }
+
+    case "depoimentos": {
+      const testimonialContent = widget.content as {
+        testimonials?: Array<{
+          id: string;
+          avatar?: string;
+          name: string;
+          rating: number;
+          text: string;
+        }>;
+        columns?: number;
+      };
+
+      const defaultTestimonials = [
+        {
+          id: "1",
+          name: "Maria Silva",
+          rating: 5,
+          text: "Excelente produto! Superou todas as minhas expectativas. Recomendo para todos.",
+        },
+        {
+          id: "2",
+          name: "João Santos",
+          rating: 4,
+          text: "Muito bom, entrega rápida e produto de qualidade. Voltarei a comprar.",
+        },
+      ];
+
+      const testimonials =
+        testimonialContent.testimonials || defaultTestimonials;
+      const columns = testimonialContent.columns || 2;
+      const gridCols = {
+        1: "grid-cols-1",
+        2: "grid-cols-2",
+        3: "grid-cols-3",
+        4: "grid-cols-4",
+      }[columns];
+
+      const renderStars = (rating: number) => {
+        return Array.from({ length: 5 }, (_, i) => {
+          const isFilled = i < rating;
+          return isFilled ? (
+            <IconStarFilled
+              key={`star-${i}`}
+              className="w-4 h-4 text-yellow-400"
+            />
+          ) : (
+            <IconStar key={`star-${i}`} className="w-4 h-4 text-gray-300" />
+          );
+        });
+      };
+
+      return (
+        <div className="p-6">
+          <div className={`grid ${gridCols} gap-6`}>
+            {testimonials.map((testimonial) => (
+              <div
+                key={testimonial.id}
+                className="flex flex-col gap-4 p-6 border rounded-xl bg-card shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full overflow-hidden bg-muted flex items-center justify-center">
+                    {testimonial.avatar ? (
+                      <Image
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <IconUser className="w-6 h-6 text-muted-foreground" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-sm">
+                      {testimonial.name}
+                    </h4>
+                    <div className="flex items-center gap-1 mt-1">
+                      {renderStars(testimonial.rating)}
+                    </div>
+                  </div>
                 </div>
-              ))}
-              <Button className="w-full">
-                {captureContent.submitLabel || "Enviar"}
-              </Button>
-            </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  "{testimonial.text}"
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       );
