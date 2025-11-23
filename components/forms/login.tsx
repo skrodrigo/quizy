@@ -130,7 +130,7 @@ export default function LoginForm() {
                 )}
               />
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full" size='lg' disabled={isLoading}>
                 {isLoading ? <SpinnerCustom /> : "Entrar"}
               </Button>
             </form>
@@ -146,7 +146,7 @@ export default function LoginForm() {
             <Button
               type="button"
               variant="outline"
-              className="w-full "
+              className="w-full"
               onClick={handleGoogleSignIn}
             >
               <svg
