@@ -183,10 +183,10 @@ export default function DashboardPage() {
               <Image
                 src={
                   mounted && theme === "dark"
-                    ? "/quizy.svg"
-                    : "/quizy-black.svg"
+                    ? "/funilead.svg"
+                    : "/funilead-black.svg"
                 }
-                alt="Quizy"
+                alt="funilead"
                 width={100}
                 height={100}
                 className="w-16 flex-shrink-0"

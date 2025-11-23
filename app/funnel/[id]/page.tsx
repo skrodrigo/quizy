@@ -153,13 +153,12 @@ export default function PublicFunnelPage() {
             {funnelData.steps.map((_, index) => (
               <div
                 key={`step-${index}`}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentStep
+                className={`w-2 h-2 rounded-full transition-colors ${index === currentStep
                     ? "bg-primary"
                     : index < currentStep
                       ? "bg-primary/50"
                       : "bg-muted"
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -178,7 +177,7 @@ export default function PublicFunnelPage() {
 
         {/* Footer */}
         <footer className="mt-12 pt-6 border-t text-center text-sm text-muted-foreground">
-          <p>Powered by Quizy</p>
+          <p>Powered by funilead</p>
         </footer>
       </main>
     </div>

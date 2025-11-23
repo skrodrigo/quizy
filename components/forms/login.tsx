@@ -87,8 +87,8 @@ export default function LoginForm() {
           <div className="flex items-center flex-col justify-center mb-4">
             <Link href="/" aria-label="go home">
               <Image
-                src="/quizy.svg"
-                alt="Quizy"
+                src="/funilead.svg"
+                alt="funilead"
                 width={100}
                 height={100}
                 className="w-32"

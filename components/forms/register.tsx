@@ -72,7 +72,7 @@ export default function RegisterForm() {
     }
 
     toast.success("Conta criada com sucesso!", {
-      description: "Bem-vindo ao Quizy! Você será redirecionado.",
+      description: "Bem-vindo ao funilead! Você será redirecionado.",
     });
     router.push("/dashboard");
   }
@@ -97,8 +97,8 @@ export default function RegisterForm() {
           <div className="flex items-center flex-col justify-center mb-4">
             <Link href="/" aria-label="go home">
               <Image
-                src="/quizy.svg"
-                alt="Quizy"
+                src="/funilead.svg"
+                alt="funilead"
                 width={100}
                 height={100}
                 className="w-32"
@@ -144,7 +144,7 @@ export default function RegisterForm() {
                 name="source"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Por onde você viu o Quizy?</FormLabel>
+                    <FormLabel>Por onde você viu o funilead?</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}

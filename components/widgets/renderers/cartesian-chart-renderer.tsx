@@ -135,7 +135,7 @@ export function CartesianChartRenderer({
     <div className="p-6 space-y-4 w-full">
       <div className="text-center">
         <h3 className="font-semibold text-lg">{content.title || "Seu IMC:"}</h3>
-        <div className="inline-flex items-center gap-2 mt-2 px-3 py-1 bg-gray-900 text-white rounded-full text-sm">
+        <div className="inline-flex items-center gap-2 mt-2 px-3 py-1 bg-foreground text-white rounded-full text-sm">
           <span>Seu imc:</span>
         </div>
       </div>

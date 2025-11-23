@@ -12,7 +12,7 @@ export function FooterSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div>
             <h3 className="font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-4">
-              Quizy
+              funilead
             </h3>
             <p className="text-slate-400 text-sm leading-relaxed">
               A plataforma que transforma visitantes em clientes através de
@@ -115,7 +115,7 @@ export function FooterSection() {
 
         <div className="border-t border-slate-800 pt-8 text-center">
           <p className="text-slate-500 text-sm">
-            © 2025 Quizy. Todos os direitos reservados.
+            © 2025 funilead. Todos os direitos reservados.
           </p>
         </div>
       </div>
