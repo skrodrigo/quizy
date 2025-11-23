@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  IconArrowLeft,
   IconCheck,
+  IconChevronLeft,
   IconCopy,
   IconDeviceMobile,
   IconPlayerPlay,
@@ -92,7 +92,7 @@ function FunnelPageContent() {
   // Função para abrir preview em nova aba
   const openPreview = () => {
     const funnelId = window.location.pathname.split("/").pop();
-    
+
     // Salvar dados atuais do funil para o preview
     const currentFunnelData = {
       id: funnelId,
@@ -100,12 +100,15 @@ function FunnelPageContent() {
       steps: steps,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      status: "preview"
+      status: "preview",
     };
-    
+
     // Salvar no localStorage para o preview acessar
-    localStorage.setItem(`preview_funnel_${funnelId}`, JSON.stringify(currentFunnelData));
-    
+    localStorage.setItem(
+      `preview_funnel_${funnelId}`,
+      JSON.stringify(currentFunnelData),
+    );
+
     const previewUrl = `/preview/${funnelId}`;
     window.open(previewUrl, "_blank", "noopener,noreferrer");
   };
@@ -213,7 +216,7 @@ function FunnelPageContent() {
                 size="icon"
                 onClick={() => router.push("/dashboard")}
               >
-                <IconArrowLeft stroke={2} className="size-4" />
+                <IconChevronLeft stroke={2} className="size-4" />
               </Button>
               <div className="w-[0.5px] bg-muted h-4 hidden sm:block" />
               <div className="flex items-center gap-2 sm:gap-4">
@@ -345,14 +348,14 @@ function FunnelPageContent() {
                     {deviceType === "ios" ? (
                       <div className="relative">
                         <Iphone className="w-full" />
-                        <div 
-                          className="absolute bg-white dark:bg-slate-900 overflow-auto"
+                        <div
+                          className="absolute bg-muted overflow-auto"
                           style={{
-                            left: '4.9%',
-                            top: '2.2%', 
-                            width: '90%',
-                            height: '95.6%',
-                            borderRadius: '12.8% / 6.6%'
+                            left: "4.9%",
+                            top: "2.2%",
+                            width: "90%",
+                            height: "95.6%",
+                            borderRadius: "12.8% / 6.6%",
                           }}
                         >
                           <div className="h-full w-full scale-75 origin-top-left transform">
@@ -363,14 +366,14 @@ function FunnelPageContent() {
                     ) : (
                       <div className="relative">
                         <Android className="w-full" />
-                        <div 
-                          className="absolute bg-white dark:bg-slate-900 overflow-auto"
+                        <div
+                          className="absolute bg-muted overflow-auto"
                           style={{
-                            left: '2.4%',
-                            top: '1.7%',
-                            width: '95.2%', 
-                            height: '96.6%',
-                            borderRadius: '8% / 4%'
+                            left: "2.4%",
+                            top: "1.7%",
+                            width: "95.2%",
+                            height: "96.6%",
+                            borderRadius: "8% / 4%",
                           }}
                         >
                           <div className="h-full w-full scale-75 origin-top-left transform">

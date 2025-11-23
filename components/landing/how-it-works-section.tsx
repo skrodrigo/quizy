@@ -1,35 +1,48 @@
-import { MousePointer2, Palette, Rocket, BarChart } from "lucide-react";
+import {
+  IconChartBar,
+  IconMouse,
+  IconPalette,
+  IconRocket,
+} from "@tabler/icons-react";
 
 export function HowItWorksSection() {
   const steps = [
     {
-      icon: MousePointer2,
+      icon: IconMouse,
       title: "Arraste e Solte",
-      description: "Escolha entre +50 widgets e monte seu funil em minutos. Sem código, sem complicação.",
+      description:
+        "Escolha entre +50 widgets e monte seu funil em minutos. Sem código, sem complicação.",
     },
     {
-      icon: Palette,
+      icon: IconPalette,
       title: "Personalize Tudo",
-      description: "Cores, fontes, espaçamentos. Cada detalhe ajustável para combinar com sua marca.",
+      description:
+        "Cores, fontes, espaçamentos. Cada detalhe ajustável para combinar com sua marca.",
     },
     {
-      icon: Rocket,
+      icon: IconRocket,
       title: "Publique Instantâneo",
-      description: "Um clique e seu funil está no ar. Domínio próprio, rápido e profissional.",
+      description:
+        "Um clique e seu funil está no ar. Domínio próprio, rápido e profissional.",
     },
     {
-      icon: BarChart,
+      icon: IconChartBar,
       title: "Analise e Otimize",
-      description: "Acompanhe cada interação em tempo real e melhore suas conversões continuamente.",
+      description:
+        "Acompanhe cada interação em tempo real e melhore suas conversões continuamente.",
     },
   ];
 
   return (
-    <section className="py-32 bg-slate-900">
+    <section className="py-32 bg-muted">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           <h2 className="font-black text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
-            Simples. <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Rápido</span>. Poderoso.
+            Simples.{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+              Rápido
+            </span>
+            . Poderoso.
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Crie funis profissionais em 4 passos simples
@@ -40,12 +53,9 @@ export function HowItWorksSection() {
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
-              <div
-                key={index}
-                className="relative group"
-              >
+              <div key={step.title} className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-pink-600/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
-                <div className="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 hover:border-purple-500/50 transition-all h-full">
+                <div className="relative bg-muted backdrop-blur-sm border border-slate-700 rounded-2xl p-8 hover:border-purple-500/50 transition-all h-full">
                   <div className="flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 mb-6 group-hover:scale-110 transition-transform">
                     <Icon className="h-8 w-8 text-white" />
                   </div>

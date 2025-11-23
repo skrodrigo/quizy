@@ -43,7 +43,7 @@ export function RulerSlider({
 
       setOffset((prev) => prev + deltaX * 0.5);
     },
-    [isDragging]
+    [isDragging],
   );
 
   const handlePointerUp = useCallback(() => {
@@ -97,7 +97,7 @@ export function RulerSlider({
                 ? "h-8 w-0.5"
                 : isMediumTick
                   ? "h-6 w-0.5"
-                  : "h-4 w-px"
+                  : "h-4 w-px",
             )}
           />
           {isMainTick && (
@@ -105,14 +105,15 @@ export function RulerSlider({
               {tickValue}
             </span>
           )}
-        </div>
+        </div>,
       );
     }
 
     return ticks;
   };
 
-  const currentDisplayValue = Math.round((value + (-offset / pixelsPerStep) * step) / step) * step;
+  const currentDisplayValue =
+    Math.round((value + (-offset / pixelsPerStep) * step) / step) * step;
   const clampedDisplayValue = Math.max(min, Math.min(max, currentDisplayValue));
 
   return (

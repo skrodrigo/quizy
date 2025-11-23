@@ -1,13 +1,13 @@
 "use client";
 
 import {
+  IconLoader,
   IconPlayerPlay,
   IconStar,
   IconStarFilled,
   IconUpload,
   IconUser,
 } from "@tabler/icons-react";
-import { LoaderIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -45,7 +45,7 @@ function LoadingWidgetRenderer({ content }: { content: LoadingWidgetContent }) {
   const renderSpinner = () => {
     switch (variant) {
       case "spinner":
-        return <LoaderIcon className="h-6 w-6 animate-spin text-primary" />;
+        return <IconLoader className="h-6 w-6 animate-spin text-primary" />;
 
       case "dots":
         return (
@@ -65,7 +65,7 @@ function LoadingWidgetRenderer({ content }: { content: LoadingWidgetContent }) {
         );
 
       default:
-        return <LoaderIcon className="h-6 w-6 animate-spin text-primary" />;
+        return <IconLoader className="h-6 w-6 animate-spin text-primary" />;
     }
   };
 
@@ -102,10 +102,10 @@ function WeightWidgetRenderer({ widget }: WidgetRendererProps) {
 
   return (
     <div className="p-6 max-w-md mx-auto">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border">
+      <div className="bg-white dark:bg-muted rounded-2xl p-6 shadow-sm border">
         {/* Tabs de unidade */}
         <div className="flex justify-center mb-6">
-          <div className="flex bg-gray-100 dark:bg-slate-800 rounded-full p-1">
+          <div className="flex bg-gray-100 dark:bg-muted rounded-full p-1">
             <button
               type="button"
               onClick={() => setUnit("kg")}
@@ -178,10 +178,10 @@ function HeightWidgetRenderer({ widget }: WidgetRendererProps) {
 
   return (
     <div className="p-6 max-w-md mx-auto">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border">
+      <div className="bg-white dark:bg-muted rounded-2xl p-6 shadow-sm border">
         {/* Tabs de unidade */}
         <div className="flex justify-center mb-6">
-          <div className="flex bg-gray-100 dark:bg-slate-800 rounded-full p-1">
+          <div className="flex bg-gray-100 dark:bg-muted rounded-full p-1">
             <button
               type="button"
               onClick={() => setUnit("cm")}
@@ -488,6 +488,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                         <Image
                           src={item.image}
                           alt={item.alt || "Slide"}
+                          fill
                           className="w-full h-full object-cover rounded-lg"
                         />
                       ) : (
@@ -583,37 +584,41 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
 
     case "argumentos": {
       const argumentContent = widget.content as ArgumentWidgetContent;
-      
+
       // Dados de exemplo para quando não há argumentos configurados
       const defaultArgs = [
         {
           id: "1",
           title: "Qualidade Premium",
-          description: "Produtos de alta qualidade com materiais selecionados e acabamento impecável.",
-          image: ""
+          description:
+            "Produtos de alta qualidade com materiais selecionados e acabamento impecável.",
+          image: "",
         },
         {
-          id: "2", 
+          id: "2",
           title: "Entrega Rápida",
-          description: "Receba seus produtos em até 24h com nosso sistema de entrega expressa.",
-          image: ""
+          description:
+            "Receba seus produtos em até 24h com nosso sistema de entrega expressa.",
+          image: "",
         },
         {
           id: "3",
           title: "Garantia Total",
-          description: "100% de garantia de satisfação ou seu dinheiro de volta sem complicações.",
-          image: ""
-        }
+          description:
+            "100% de garantia de satisfação ou seu dinheiro de volta sem complicações.",
+          image: "",
+        },
       ];
 
-      const argsList = argumentContent.arguments && argumentContent.arguments.length > 0 
-        ? argumentContent.arguments 
-        : defaultArgs;
+      const argsList =
+        argumentContent.arguments && argumentContent.arguments.length > 0
+          ? argumentContent.arguments
+          : defaultArgs;
 
       const columns = argumentContent.columns || 3;
       const gridCols = {
         1: "grid-cols-1",
-        2: "grid-cols-2", 
+        2: "grid-cols-2",
         3: "grid-cols-3",
         4: "grid-cols-4",
       }[columns];
@@ -631,6 +636,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                     <Image
                       src={arg.image}
                       alt={arg.title}
+                      fill
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -663,6 +669,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                 <Image
                   src={captureContent.image}
                   alt="Imagem capturada"
+                  fill
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -754,6 +761,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                       <Image
                         src={testimonial.avatar}
                         alt={testimonial.name}
+                        fill
                         className="w-full h-full object-cover"
                       />
                     ) : (

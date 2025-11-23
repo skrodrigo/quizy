@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
+import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,7 +37,11 @@ export function CartesianChartWidgetConfig({
     });
   };
 
-  const updateDataPoint = (index: number, field: string, value: string | number) => {
+  const updateDataPoint = (
+    index: number,
+    field: string,
+    value: string | number,
+  ) => {
     const updated = [...content.dataPoints];
     updated[index] = { ...updated[index], [field]: value };
     onContentChange({ ...content, dataPoints: updated });
@@ -49,7 +53,9 @@ export function CartesianChartWidgetConfig({
         <Label>Título</Label>
         <Input
           value={content.title}
-          onChange={(e) => onContentChange({ ...content, title: e.target.value })}
+          onChange={(e) =>
+            onContentChange({ ...content, title: e.target.value })
+          }
           placeholder="Ex: Análise"
         />
       </div>
@@ -59,7 +65,10 @@ export function CartesianChartWidgetConfig({
         <Tabs
           value={content.chartType}
           onValueChange={(value) =>
-            onContentChange({ ...content, chartType: value as "area" | "line" | "bar" })
+            onContentChange({
+              ...content,
+              chartType: value as "area" | "line" | "bar",
+            })
           }
         >
           <TabsList className="grid w-full grid-cols-3">
@@ -74,7 +83,7 @@ export function CartesianChartWidgetConfig({
         <div className="flex items-center justify-between">
           <Label>Dados</Label>
           <Button size="sm" variant="outline" onClick={addDataPoint}>
-            <Plus className="h-4 w-4 mr-1" />
+            <IconPlus className="h-4 w-4 mr-1" />
             Adicionar
           </Button>
         </div>
@@ -83,13 +92,15 @@ export function CartesianChartWidgetConfig({
           {content.dataPoints.map((point, index) => (
             <div key={index} className="rounded-lg border p-3 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="font-medium text-sm">{point.label || `Ponto ${index + 1}`}</span>
+                <span className="font-medium text-sm">
+                  {point.label || `Ponto ${index + 1}`}
+                </span>
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={() => removeDataPoint(index)}
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <IconTrash className="h-4 w-4" />
                 </Button>
               </div>
 
@@ -97,7 +108,9 @@ export function CartesianChartWidgetConfig({
                 <Input
                   placeholder="Label"
                   value={point.label}
-                  onChange={(e) => updateDataPoint(index, "label", e.target.value)}
+                  onChange={(e) =>
+                    updateDataPoint(index, "label", e.target.value)
+                  }
                   className="text-sm"
                 />
 
@@ -105,7 +118,9 @@ export function CartesianChartWidgetConfig({
                   type="number"
                   placeholder="Valor"
                   value={point.value}
-                  onChange={(e) => updateDataPoint(index, "value", Number(e.target.value))}
+                  onChange={(e) =>
+                    updateDataPoint(index, "value", Number(e.target.value))
+                  }
                   className="text-sm"
                 />
 
@@ -114,7 +129,9 @@ export function CartesianChartWidgetConfig({
                     <Input
                       placeholder="Fórmula (opcional)"
                       value={point.formula || ""}
-                      onChange={(e) => updateDataPoint(index, "formula", e.target.value)}
+                      onChange={(e) =>
+                        updateDataPoint(index, "formula", e.target.value)
+                      }
                       className="text-sm font-mono"
                     />
                   </div>
@@ -132,7 +149,9 @@ export function CartesianChartWidgetConfig({
         <Label>Eixo X</Label>
         <Input
           value={content.xAxisLabel || ""}
-          onChange={(e) => onContentChange({ ...content, xAxisLabel: e.target.value })}
+          onChange={(e) =>
+            onContentChange({ ...content, xAxisLabel: e.target.value })
+          }
           placeholder="Label do eixo X"
         />
       </div>
@@ -141,7 +160,9 @@ export function CartesianChartWidgetConfig({
         <Label>Eixo Y</Label>
         <Input
           value={content.yAxisLabel || ""}
-          onChange={(e) => onContentChange({ ...content, yAxisLabel: e.target.value })}
+          onChange={(e) =>
+            onContentChange({ ...content, yAxisLabel: e.target.value })
+          }
           placeholder="Label do eixo Y"
         />
       </div>

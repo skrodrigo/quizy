@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
+import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,10 +21,7 @@ export function TermsWidgetConfig({
   const addTerm = () => {
     onContentChange({
       ...content,
-      terms: [
-        ...(content.terms || []),
-        { label: "Novo termo", url: "#" },
-      ],
+      terms: [...(content.terms || []), { label: "Novo termo", url: "#" }],
     });
   };
 
@@ -59,14 +56,14 @@ export function TermsWidgetConfig({
         <div className="flex items-center justify-between">
           <Label>Termos</Label>
           <Button size="sm" variant="outline" onClick={addTerm}>
-            <Plus className="h-4 w-4 mr-1" />
+            <IconPlus className="h-4 w-4 mr-1" />
             Adicionar
           </Button>
         </div>
 
         <div className="space-y-3 max-h-[300px] overflow-y-auto">
           {content.terms?.map((term, index) => (
-            <div key={index} className="rounded-lg border p-3 space-y-2">
+            <div key={term.label} className="rounded-lg border p-3 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-medium text-sm">{term.label}</span>
                 <Button
@@ -74,7 +71,7 @@ export function TermsWidgetConfig({
                   variant="ghost"
                   onClick={() => removeTerm(index)}
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <IconTrash className="h-4 w-4" />
                 </Button>
               </div>
 

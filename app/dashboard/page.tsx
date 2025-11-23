@@ -130,7 +130,6 @@ const chartData2 = [
   { date: "2024-05-30", desktop: 340, mobile: 280 },
 ];
 
-
 export default function DashboardPage() {
   const router = useRouter();
   const [selectedFunnel, setSelectedFunnel] = React.useState("funil-1");

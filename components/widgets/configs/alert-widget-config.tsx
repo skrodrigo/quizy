@@ -51,7 +51,11 @@ export function AlertWidgetConfig({
           onChange={(e) =>
             onContentChange({
               ...content,
-              variant: e.target.value as "info" | "warning" | "error" | "success",
+              variant: e.target.value as
+                | "info"
+                | "warning"
+                | "error"
+                | "success",
             })
           }
         >

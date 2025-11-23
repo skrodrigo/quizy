@@ -1,6 +1,8 @@
+"use client";
+
 import { Range, Root, Thumb, Track } from "@radix-ui/react-slider";
+import { IconColorPicker } from "@tabler/icons-react";
 import Color from "color";
-import { PipetteIcon } from "lucide-react";
 import {
   type ChangeEventHandler,
   type ComponentProps,
@@ -285,7 +287,7 @@ export const ColorPickerEyeDropper = ({
       className={cn("shrink-0 text-muted-foreground", className)}
       {...props}
     >
-      <PipetteIcon size={16} />
+      <IconColorPicker size={16} />
     </Button>
   );
 };

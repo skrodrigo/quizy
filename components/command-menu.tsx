@@ -1,11 +1,22 @@
 "use client";
 
-import { LayoutDashboard, SearchIcon, Workflow } from "lucide-react";
+import {
+  IconChartFunnel,
+  IconLayoutDashboard,
+  IconSearch,
+} from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./ui/command";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "./ui/command";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 export function CommandMenu() {
@@ -43,11 +54,10 @@ export function CommandMenu() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className={cn(
-            "text-foreground hover:text-foreground/80 ",
-          )}
+          className={cn("text-foreground hover:text-foreground/80 ")}
         >
-          <span className="mr-3 text-muted-foreground">Buscar Funis</span>          <SearchIcon />
+          <span className="mr-3 text-muted-foreground">Buscar Funis</span>{" "}
+          <IconSearch />
         </Button>
       </DialogTrigger>
       <DialogContent className="p-0">
@@ -57,12 +67,16 @@ export function CommandMenu() {
           <CommandList>
             <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
             <CommandGroup heading="Páginas">
-              <CommandItem onSelect={() => runCommand(() => router.push("/dashboard"))}>
-                <LayoutDashboard />
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/dashboard"))}
+              >
+                <IconLayoutDashboard />
                 <span>Dashboard</span>
               </CommandItem>
-              <CommandItem onSelect={() => runCommand(() => router.push("/funis"))}>
-                <Workflow />
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/funis"))}
+              >
+                <IconChartFunnel />
                 <span>Funis</span>
               </CommandItem>
             </CommandGroup>

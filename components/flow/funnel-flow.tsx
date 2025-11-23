@@ -119,7 +119,8 @@ export function FunnelFlow() {
           path: "smoothstep",
         },
         animated: true,
-        className: "stroke-muted-foreground stroke-[2.5] [stroke-dasharray:8,4]",
+        className:
+          "stroke-muted-foreground stroke-[2.5] [stroke-dasharray:8,4]",
       };
       setEdges((eds) => addEdge(newEdge, eds));
     },
@@ -140,11 +141,15 @@ export function FunnelFlow() {
         className="bg-background"
         defaultEdgeOptions={{
           animated: true,
-          className: "stroke-muted-foreground stroke-[2.5] [stroke-dasharray:8,4]",
+          className:
+            "stroke-muted-foreground stroke-[2.5] [stroke-dasharray:8,4]",
         }}
       >
         <Background className="[&>*]:stroke-muted-foreground/10" />
-        <ZoomSlider position="bottom-left" className="bg-card backdrop-blur-md border border-border rounded-xl" />
+        <ZoomSlider
+          position="bottom-left"
+          className="bg-card backdrop-blur-md border border-border rounded-xl"
+        />
         <MiniMap className="bg-card backdrop-blur-md border border-border rounded-xl" />
       </ReactFlow>
     </div>

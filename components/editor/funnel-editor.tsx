@@ -37,7 +37,7 @@ function SortableWidget({
   widget,
   isSelected,
   onSelect,
-  onDelete
+  onDelete,
 }: SortableWidgetProps) {
   const {
     attributes,
@@ -62,11 +62,7 @@ function SortableWidget({
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="relative group"
-    >
+    <div ref={setNodeRef} style={style} className="relative group">
       <div
         {...attributes}
         {...listeners}
@@ -81,22 +77,21 @@ function SortableWidget({
           }
         }}
         style={{ width: widget.style.width || "100%" }}
-        className={`cursor-grab active:cursor-grabbing  ${isSelected
-          ? "border border-chart-3 border-dashed"
-          : "hover:ring-2 hover:ring-muted-foreground/20"
-          }`}
+        className={`cursor-grab active:cursor-grabbing  ${
+          isSelected ? "border border-muted border-dashed" : ""
+        }`}
       >
         <WidgetRenderer widget={widget} />
       </div>
       {isSelected && (
-        <div className="absolute -top-3 right-2 flex gap-1 bg-chart-3 border rounded-md shadow-md p-1">
+        <div className="absolute -top-3 right-2 flex gap-1 bg-muted border rounded-md shadow-md p-1">
           <Button
             size="icon"
             variant="ghost"
             className="h-4 w-4 hover:bg-transparent"
             onClick={() => onDelete(widget.id)}
           >
-            <IconTrash className="text-secondary" />
+            <IconTrash className="text-foreground" />
           </Button>
         </div>
       )}

@@ -150,9 +150,14 @@ export function WidgetConfigPanel({
                     type="number"
                     min="10"
                     max="100"
-                    value={parseInt(widget.style.width?.replace("%", "") || "100")}
+                    value={parseInt(
+                      widget.style.width?.replace("%", "") || "100",
+                    )}
                     onChange={(e) => {
-                      const value = Math.min(100, Math.max(10, parseInt(e.target.value) || 100));
+                      const value = Math.min(
+                        100,
+                        Math.max(10, parseInt(e.target.value) || 100),
+                      );
                       onUpdate({
                         ...widget,
                         style: { ...widget.style, width: `${value}%` },
@@ -165,11 +170,16 @@ export function WidgetConfigPanel({
                       min="10"
                       max="100"
                       step="5"
-                      value={parseInt(widget.style.width?.replace("%", "") || "100")}
+                      value={parseInt(
+                        widget.style.width?.replace("%", "") || "100",
+                      )}
                       onChange={(e) => {
                         onUpdate({
                           ...widget,
-                          style: { ...widget.style, width: `${e.target.value}%` },
+                          style: {
+                            ...widget.style,
+                            width: `${e.target.value}%`,
+                          },
                         });
                       }}
                       className="flex-1"

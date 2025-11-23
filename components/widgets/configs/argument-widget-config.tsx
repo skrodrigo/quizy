@@ -4,7 +4,13 @@ import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { ArgumentWidgetContent, WidgetStyle } from "../types";
 
@@ -53,7 +59,10 @@ export function ArgumentWidgetConfig({
         <Select
           value={String(content.columns || 3)}
           onValueChange={(value) =>
-            onContentChange({ ...content, columns: Number(value) as 1 | 2 | 3 | 4 })
+            onContentChange({
+              ...content,
+              columns: Number(value) as 1 | 2 | 3 | 4,
+            })
           }
         >
           <SelectTrigger>

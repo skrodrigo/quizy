@@ -14,11 +14,11 @@ const flexDirections = {
 export const LabeledHandle = forwardRef<
   HTMLDivElement,
   HandleProps &
-  HTMLAttributes<HTMLDivElement> & {
-    title: string;
-    handleClassName?: string;
-    labelClassName?: string;
-  }
+    HTMLAttributes<HTMLDivElement> & {
+      title: string;
+      handleClassName?: string;
+      labelClassName?: string;
+    }
 >(
   (
     { className, labelClassName, handleClassName, title, position, ...props },

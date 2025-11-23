@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { CaptureWidgetContent, WidgetStyle } from "../types";
 
 interface CaptureWidgetConfigProps {
@@ -51,7 +57,9 @@ export function CaptureWidgetConfig({
         <Label>URL da Imagem</Label>
         <Input
           value={content.image || ""}
-          onChange={(e) => onContentChange({ ...content, image: e.target.value })}
+          onChange={(e) =>
+            onContentChange({ ...content, image: e.target.value })
+          }
           placeholder="https://exemplo.com/imagem.jpg"
         />
       </div>
@@ -61,7 +69,10 @@ export function CaptureWidgetConfig({
         <Select
           value={content.imageAspectRatio || "video"}
           onValueChange={(value) =>
-            onContentChange({ ...content, imageAspectRatio: value as "square" | "video" | "portrait" })
+            onContentChange({
+              ...content,
+              imageAspectRatio: value as "square" | "video" | "portrait",
+            })
           }
         >
           <SelectTrigger>

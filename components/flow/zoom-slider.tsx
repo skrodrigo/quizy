@@ -1,5 +1,6 @@
 "use client";
 
+import { IconMaximize, IconMinus, IconPlus } from "@tabler/icons-react";
 import {
   Panel,
   type PanelProps,
@@ -7,7 +8,6 @@ import {
   useStore,
   useViewport,
 } from "@xyflow/react";
-import { Maximize, Minus, Plus } from "lucide-react";
 import { forwardRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
@@ -36,7 +36,7 @@ export const ZoomSlider = forwardRef<
         size="icon"
         onClick={() => zoomOut({ duration: 300 })}
       >
-        <Minus className="h-4 w-4" />
+        <IconMinus className="h-4 w-4" />
       </Button>
       <Slider
         className="w-[140px]"
@@ -51,7 +51,7 @@ export const ZoomSlider = forwardRef<
         size="icon"
         onClick={() => zoomIn({ duration: 300 })}
       >
-        <Plus className="h-4 w-4" />
+        <IconPlus className="h-4 w-4" />
       </Button>
       <Button
         className="min-w-20 tabular-nums"
@@ -65,7 +65,7 @@ export const ZoomSlider = forwardRef<
         size="icon"
         onClick={() => fitView({ duration: 300 })}
       >
-        <Maximize className="h-4 w-4" />
+        <IconMaximize className="h-4 w-4" />
       </Button>
     </Panel>
   );

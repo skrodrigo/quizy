@@ -3,7 +3,11 @@
 import { Label } from "@/components/ui/label";
 import { RulerSlider } from "@/components/ui/ruler-slider";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { HeightWidgetContent, WeightWidgetContent, WidgetStyle } from "../types";
+import type {
+  HeightWidgetContent,
+  WeightWidgetContent,
+  WidgetStyle,
+} from "../types";
 
 interface HeightWidgetConfigProps {
   content: HeightWidgetContent;

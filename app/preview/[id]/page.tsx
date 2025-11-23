@@ -30,8 +30,8 @@ const mockFunnelData = {
             fontWeight: "bold",
             textAlign: "center",
             width: "100%",
-            height: "auto"
-          }
+            height: "auto",
+          },
         },
         {
           id: "widget-2",
@@ -47,13 +47,13 @@ const mockFunnelData = {
             fontWeight: "500",
             textAlign: "center",
             width: "200px",
-            height: "auto"
-          }
-        }
-      ]
+            height: "auto",
+          },
+        },
+      ],
     },
     {
-      id: "step-2", 
+      id: "step-2",
       name: "Pergunta 1",
       widgets: [
         {
@@ -70,8 +70,8 @@ const mockFunnelData = {
             fontWeight: "600",
             textAlign: "center",
             width: "100%",
-            height: "auto"
-          }
+            height: "auto",
+          },
         },
         {
           id: "widget-4",
@@ -81,9 +81,9 @@ const mockFunnelData = {
               { id: "18-25", label: "18-25 anos" },
               { id: "26-35", label: "26-35 anos" },
               { id: "36-45", label: "36-45 anos" },
-              { id: "46+", label: "46+ anos" }
+              { id: "46+", label: "46+ anos" },
             ],
-            columns: 2
+            columns: 2,
           },
           style: {
             backgroundColor: "transparent",
@@ -95,10 +95,10 @@ const mockFunnelData = {
             fontWeight: "normal",
             textAlign: "left",
             width: "100%",
-            height: "auto"
-          }
-        }
-      ]
+            height: "auto",
+          },
+        },
+      ],
     },
     {
       id: "step-3",
@@ -118,8 +118,8 @@ const mockFunnelData = {
             fontWeight: "600",
             textAlign: "center",
             width: "100%",
-            height: "auto"
-          }
+            height: "auto",
+          },
         },
         {
           id: "widget-6",
@@ -135,18 +135,18 @@ const mockFunnelData = {
             fontWeight: "normal",
             textAlign: "left",
             width: "100%",
-            height: "auto"
-          }
-        }
-      ]
-    }
-  ]
+            height: "auto",
+          },
+        },
+      ],
+    },
+  ],
 };
 
 export default function PreviewPage() {
   const params = useParams();
   const funnelId = params.id as string;
-  
+
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [funnelData, setFunnelData] = useState(mockFunnelData);
@@ -157,20 +157,25 @@ export default function PreviewPage() {
       try {
         // Tentar carregar dados do preview primeiro (dados mais recentes)
         const previewData = localStorage.getItem(`preview_funnel_${funnelId}`);
-        
+
         if (previewData) {
           const funnel = JSON.parse(previewData);
           setFunnelData(funnel);
-          
+
           // Limpar dados de preview após 5 minutos para não acumular
-          setTimeout(() => {
-            localStorage.removeItem(`preview_funnel_${funnelId}`);
-          }, 5 * 60 * 1000);
+          setTimeout(
+            () => {
+              localStorage.removeItem(`preview_funnel_${funnelId}`);
+            },
+            5 * 60 * 1000,
+          );
         } else {
           // Se não houver dados de preview, tentar carregar dados salvos
-          const savedFunnels = JSON.parse(localStorage.getItem("funnels") || "[]");
+          const savedFunnels = JSON.parse(
+            localStorage.getItem("funnels") || "[]",
+          );
           const savedFunnel = savedFunnels.find((f: any) => f.id === funnelId);
-          
+
           if (savedFunnel) {
             setFunnelData(savedFunnel);
           } else {
@@ -201,7 +206,8 @@ export default function PreviewPage() {
     }
   };
 
-  const progressPercentage = ((currentStep + 1) / funnelData.steps.length) * 100;
+  const progressPercentage =
+    ((currentStep + 1) / funnelData.steps.length) * 100;
 
   if (isLoading) {
     return (
@@ -248,7 +254,7 @@ export default function PreviewPage() {
           >
             Anterior
           </Button>
-          
+
           <div className="flex gap-2">
             {funnelData.steps.map((_, index) => (
               <div
@@ -257,8 +263,8 @@ export default function PreviewPage() {
                   index === currentStep
                     ? "bg-primary"
                     : index < currentStep
-                    ? "bg-primary/50"
-                    : "bg-muted"
+                      ? "bg-primary/50"
+                      : "bg-muted"
                 }`}
               />
             ))}
@@ -268,7 +274,9 @@ export default function PreviewPage() {
             onClick={nextStep}
             disabled={currentStep === funnelData.steps.length - 1}
           >
-            {currentStep === funnelData.steps.length - 1 ? "Finalizar" : "Próximo"}
+            {currentStep === funnelData.steps.length - 1
+              ? "Finalizar"
+              : "Próximo"}
           </Button>
         </div>
       </main>

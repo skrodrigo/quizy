@@ -1,23 +1,38 @@
 "use client";
 
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import type { CartesianChartWidgetContent } from "../types";
 
 interface CartesianChartRendererProps {
   content: CartesianChartWidgetContent;
 }
 
-export function CartesianChartRenderer({ content }: CartesianChartRendererProps) {
+export function CartesianChartRenderer({
+  content,
+}: CartesianChartRendererProps) {
   // Dados de exemplo para quando não há dados configurados
   const defaultDataPoints = [
     { label: "Pouco", value: 10, formula: "" },
     { label: "Médio", value: 45, formula: "calc({{peso}})/({{altura}})" },
-    { label: "Muito", value: 75, formula: "" }
+    { label: "Muito", value: 75, formula: "" },
   ];
 
-  const dataPoints = content.dataPoints && content.dataPoints.length > 0 
-    ? content.dataPoints 
-    : defaultDataPoints;
+  const dataPoints =
+    content.dataPoints && content.dataPoints.length > 0
+      ? content.dataPoints
+      : defaultDataPoints;
 
   const data = dataPoints.map((point) => ({
     name: point.label,
@@ -44,25 +59,27 @@ export function CartesianChartRenderer({ content }: CartesianChartRendererProps)
                 <stop offset="100%" stopColor="#00d2d3" stopOpacity={0.4} />
               </linearGradient>
             </defs>
-            {content.showGrid !== false && <CartesianGrid strokeDasharray="3 3" opacity={0.2} />}
-            <XAxis 
-              dataKey="name" 
+            {content.showGrid !== false && (
+              <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+            )}
+            <XAxis
+              dataKey="name"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tick={{ fontSize: 12, fill: "#6b7280" }}
             />
-            <YAxis 
+            <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tick={{ fontSize: 12, fill: "#6b7280" }}
             />
             {content.showTooltip !== false && (
-              <Tooltip 
+              <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1f2937',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: 'white'
+                  backgroundColor: "#1f2937",
+                  border: "none",
+                  borderRadius: "8px",
+                  color: "white",
                 }}
               />
             )}
@@ -80,7 +97,9 @@ export function CartesianChartRenderer({ content }: CartesianChartRendererProps)
       case "line":
         return (
           <LineChart {...commonProps}>
-            {content.showGrid !== false && <CartesianGrid strokeDasharray="3 3" opacity={0.3} />}
+            {content.showGrid !== false && (
+              <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+            )}
             <XAxis dataKey="name" />
             <YAxis />
             {content.showTooltip !== false && <Tooltip />}
@@ -97,7 +116,9 @@ export function CartesianChartRenderer({ content }: CartesianChartRendererProps)
       case "bar":
         return (
           <BarChart {...commonProps}>
-            {content.showGrid !== false && <CartesianGrid strokeDasharray="3 3" opacity={0.3} />}
+            {content.showGrid !== false && (
+              <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+            )}
             <XAxis dataKey="name" />
             <YAxis />
             {content.showTooltip !== false && <Tooltip />}
@@ -113,9 +134,7 @@ export function CartesianChartRenderer({ content }: CartesianChartRendererProps)
   return (
     <div className="p-6 space-y-4 w-full">
       <div className="text-center">
-        <h3 className="font-semibold text-lg">
-          {content.title || "Seu IMC:"}
-        </h3>
+        <h3 className="font-semibold text-lg">{content.title || "Seu IMC:"}</h3>
         <div className="inline-flex items-center gap-2 mt-2 px-3 py-1 bg-gray-900 text-white rounded-full text-sm">
           <span>Seu imc:</span>
         </div>
@@ -125,14 +144,21 @@ export function CartesianChartRenderer({ content }: CartesianChartRendererProps)
         {renderChart()}
       </ResponsiveContainer>
 
-      {dataPoints.some(p => p.formula) && (
+      {dataPoints.some((p) => p.formula) && (
         <div className="rounded-lg bg-muted p-4 space-y-3">
-          <p className="font-medium text-sm text-gray-700 dark:text-gray-300">Fórmulas:</p>
+          <p className="font-medium text-sm text-gray-700 dark:text-gray-300">
+            Fórmulas:
+          </p>
           {dataPoints
-            .filter(p => p.formula)
+            .filter((p) => p.formula)
             .map((point, idx) => (
-              <div key={`formula-${point.label}-${idx}`} className="flex items-center gap-2 text-xs">
-                <span className="font-medium text-gray-600 dark:text-gray-400">{point.label}:</span>
+              <div
+                key={`formula-${point.label}-${idx}`}
+                className="flex items-center gap-2 text-xs"
+              >
+                <span className="font-medium text-gray-600 dark:text-gray-400">
+                  {point.label}:
+                </span>
                 <code className="rounded bg-background px-2 py-1 font-mono text-blue-600 dark:text-blue-400">
                   {point.formula}
                 </code>

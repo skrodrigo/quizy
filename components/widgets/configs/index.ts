@@ -7,7 +7,10 @@ export { CarouselWidgetConfig } from "./carousel-widget-config";
 export { CartesianChartWidgetConfig } from "./cartesian-chart-widget-config";
 export { ChartWidgetConfig } from "./chart-widget-config";
 export { FAQWidgetConfig } from "./faq-widget-config";
-export { HeightWidgetConfig, WeightWidgetConfig } from "./height-weight-widget-config";
+export {
+  HeightWidgetConfig,
+  WeightWidgetConfig,
+} from "./height-weight-widget-config";
 export { ImageWidgetConfig } from "./image-widget-config";
 export { LoadingWidgetConfig } from "./loading-widget-config";
 export { MetricsWidgetConfig } from "./metrics-widget-config";

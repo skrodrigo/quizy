@@ -21,7 +21,11 @@ interface FunnelContextType {
   selectedWidgetId: string | null;
   setSelectedWidgetId: (id: string | null) => void;
   addWidget: (stepId: string, type: string) => void;
-  updateWidget: (stepId: string, widgetId: string, widget: WidgetConfig) => void;
+  updateWidget: (
+    stepId: string,
+    widgetId: string,
+    widget: WidgetConfig,
+  ) => void;
   deleteWidget: (stepId: string, widgetId: string) => void;
   reorderWidgets: (stepId: string, widgets: WidgetConfig[]) => void;
 }
@@ -44,7 +48,10 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
 
   const addStep = () => {
     const newId = String(Date.now());
-    setSteps([...steps, { id: newId, label: `Etapa ${steps.length + 1}`, widgets: [] }]);
+    setSteps([
+      ...steps,
+      { id: newId, label: `Etapa ${steps.length + 1}`, widgets: [] },
+    ]);
   };
 
   const deleteStep = (id: string) => {
@@ -68,7 +75,7 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
 
   const addWidget = (stepId: string, type: string) => {
     const widgetId = String(Date.now());
-    
+
     const getDefaultContent = (widgetType: string) => {
       switch (widgetType) {
         case "cartesiano":
@@ -96,7 +103,7 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
         case "preco":
           return {
             title: "Plano Premium",
-            price: 99.90,
+            price: 99.9,
             currency: "R$",
             period: "à vista",
             badge: "",
@@ -186,7 +193,11 @@ export function FunnelProvider({ children }: { children: ReactNode }) {
     setSelectedWidgetId(widgetId);
   };
 
-  const updateWidget = (stepId: string, widgetId: string, widget: WidgetConfig) => {
+  const updateWidget = (
+    stepId: string,
+    widgetId: string,
+    widget: WidgetConfig,
+  ) => {
     setSteps((prevSteps) =>
       prevSteps.map((step) =>
         step.id === stepId

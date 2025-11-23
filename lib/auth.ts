@@ -4,7 +4,6 @@ import { nextCookies } from "better-auth/next-js";
 import { prisma } from "@/lib/prisma";
 
 export const auth = betterAuth({
-
   plugins: [nextCookies()],
 
   emailAndPassword: {

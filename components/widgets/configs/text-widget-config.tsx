@@ -35,7 +35,9 @@ export function TextWidgetConfig({
         <Label>Texto</Label>
         <Textarea
           value={content.text}
-          onChange={(e) => onContentChange({ ...content, text: e.target.value })}
+          onChange={(e) =>
+            onContentChange({ ...content, text: e.target.value })
+          }
           placeholder="Digite o texto"
           rows={4}
         />
@@ -56,7 +58,9 @@ export function TextWidgetConfig({
         <Label>Tamanho da Fonte</Label>
         <Input
           value={style.fontSize || "16px"}
-          onChange={(e) => onStyleChange({ ...style, fontSize: e.target.value })}
+          onChange={(e) =>
+            onStyleChange({ ...style, fontSize: e.target.value })
+          }
           placeholder="16px"
         />
       </div>

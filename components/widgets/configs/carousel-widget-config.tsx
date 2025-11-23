@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { CarouselWidgetContent, WidgetStyle } from "../types";
 
 interface CarouselWidgetConfigProps {
@@ -46,7 +52,10 @@ export function CarouselWidgetConfig({
         <Select
           value={content.aspectRatio || "video"}
           onValueChange={(value) =>
-            onContentChange({ ...content, aspectRatio: value as "square" | "video" | "portrait" })
+            onContentChange({
+              ...content,
+              aspectRatio: value as "square" | "video" | "portrait",
+            })
           }
         >
           <SelectTrigger>

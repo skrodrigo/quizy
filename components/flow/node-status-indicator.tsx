@@ -1,6 +1,5 @@
-import { LoaderCircle } from "lucide-react";
+import { IconLoader } from "@tabler/icons-react";
 import type { ReactNode } from "react";
-
 import { cn } from "@/lib/utils";
 
 export type NodeStatus = "loading" | "success" | "error" | "initial";
@@ -20,13 +19,13 @@ export const SpinnerLoadingIndicator = ({
 }) => {
   return (
     <div className="relative">
-      <StatusBorder className="border-blue-700/40">{children}</StatusBorder>
+      <StatusBorder>{children}</StatusBorder>
 
       <div className="absolute inset-0 z-50 rounded-[7px] bg-background/50 backdrop-blur-sm" />
       <div className="absolute inset-0 z-50">
-        <span className="absolute left-[calc(50%-1.25rem)] top-[calc(50%-1.25rem)] inline-block h-10 w-10 animate-ping rounded-full bg-blue-700/20" />
+        <span className="absolute left-[calc(50%-1.25rem)] top-[calc(50%-1.25rem)] inline-block h-10 w-10 animate-ping rounded-full" />
 
-        <LoaderCircle className="absolute left-[calc(50%-0.75rem)] top-[calc(50%-0.75rem)] size-6 animate-spin text-blue-700" />
+        <IconLoader className="absolute left-[calc(50%-0.75rem)] top-[calc(50%-0.75rem)] size-6 animate-spin" />
       </div>
     </div>
   );

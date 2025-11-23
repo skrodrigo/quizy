@@ -115,10 +115,11 @@ function SortableStep({
     <div ref={setNodeRef} style={style} className="relative group w-full">
       <Button
         variant="outline"
-        className={`w-[190px] justify-start gap-2 pr-10 overflow-hidden group/button transition-all ${isSelected
-          ? "ring-2 ring-primary shadow-md opacity-100"
-          : "opacity-60 hover:opacity-100"
-          }`}
+        className={`w-[190px] justify-start gap-2 pr-10 overflow-hidden group/button transition-all ${
+          isSelected
+            ? "ring-2 ring-primary shadow-md opacity-100"
+            : "opacity-60 hover:opacity-100"
+        }`}
         onClick={() => onSelect(step.id)}
         onDoubleClick={handleDoubleClick}
       >
@@ -205,7 +206,11 @@ export function FunnelSteps() {
   }, [stepId, selectedStepId, setSelectedStepId]);
 
   useEffect(() => {
-    if (selectedStepId && selectedStepId !== stepId && !isUpdatingFromUrl.current) {
+    if (
+      selectedStepId &&
+      selectedStepId !== stepId &&
+      !isUpdatingFromUrl.current
+    ) {
       isUpdatingFromContext.current = true;
       setStepId(selectedStepId);
       isUpdatingFromContext.current = false;
@@ -222,9 +227,11 @@ export function FunnelSteps() {
     const { scrollTop, scrollHeight, clientHeight } = scrollElement;
     const newShowTopFade = scrollTop > 0;
     const newShowBottomFade = scrollTop + clientHeight < scrollHeight - 1;
-    
-    setShowTopFade((prev) => prev !== newShowTopFade ? newShowTopFade : prev);
-    setShowBottomFade((prev) => prev !== newShowBottomFade ? newShowBottomFade : prev);
+
+    setShowTopFade((prev) => (prev !== newShowTopFade ? newShowTopFade : prev));
+    setShowBottomFade((prev) =>
+      prev !== newShowBottomFade ? newShowBottomFade : prev,
+    );
   }, []);
 
   useEffect(() => {

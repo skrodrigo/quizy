@@ -63,7 +63,9 @@ export function TimerWidgetConfig({
         <Label>Tamanho da Fonte</Label>
         <Input
           value={style.fontSize || "24px"}
-          onChange={(e) => onStyleChange({ ...style, fontSize: e.target.value })}
+          onChange={(e) =>
+            onStyleChange({ ...style, fontSize: e.target.value })
+          }
           placeholder="24px"
         />
       </div>

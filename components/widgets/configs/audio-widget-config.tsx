@@ -26,7 +26,10 @@ export function AudioWidgetConfig({
         <Tabs
           value={content.style || "whatsapp"}
           onValueChange={(value) =>
-            onContentChange({ ...content, style: value as "whatsapp" | "instagram" })
+            onContentChange({
+              ...content,
+              style: value as "whatsapp" | "instagram",
+            })
           }
         >
           <TabsList className="grid w-full grid-cols-2">
@@ -49,7 +52,9 @@ export function AudioWidgetConfig({
         <Label>Duração</Label>
         <Input
           value={content.duration || "0:00"}
-          onChange={(e) => onContentChange({ ...content, duration: e.target.value })}
+          onChange={(e) =>
+            onContentChange({ ...content, duration: e.target.value })
+          }
           placeholder="0:00"
         />
       </div>

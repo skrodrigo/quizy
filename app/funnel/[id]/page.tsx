@@ -1,6 +1,6 @@
 "use client";
 
-import { IconArrowLeft } from "@tabler/icons-react";
+import { IconChevronLeft } from "@tabler/icons-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { WidgetRenderer } from "@/components/editor/widget-renderer";
@@ -96,7 +96,7 @@ export default function PublicFunnelPage() {
             O funil que você está procurando não existe ou não foi publicado.
           </p>
           <Button onClick={() => window.history.back()}>
-            <IconArrowLeft className="size-4 mr-2" />
+            <IconChevronLeft className="size-4 mr-2" />
             Voltar
           </Button>
         </div>
@@ -145,7 +145,7 @@ export default function PublicFunnelPage() {
             onClick={prevStep}
             disabled={currentStep === 0}
           >
-            <IconArrowLeft className="size-4 mr-2" />
+            <IconChevronLeft className="size-4 mr-2" />
             Anterior
           </Button>
 
@@ -153,12 +153,13 @@ export default function PublicFunnelPage() {
             {funnelData.steps.map((_, index) => (
               <div
                 key={`step-${index}`}
-                className={`w-2 h-2 rounded-full transition-colors ${index === currentStep
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  index === currentStep
                     ? "bg-primary"
                     : index < currentStep
                       ? "bg-primary/50"
                       : "bg-muted"
-                  }`}
+                }`}
               />
             ))}
           </div>
