@@ -1,10 +1,24 @@
 "use client";
 
-import { useState } from "react";
 import Color from "color";
+import { useState } from "react";
+import {
+  ColorPicker,
+  ColorPickerAlpha,
+  ColorPickerEyeDropper,
+  ColorPickerFormat,
+  ColorPickerHue,
+  ColorPickerOutput,
+  ColorPickerSelection,
+} from "@/components/color-pick";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
@@ -13,20 +27,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  ColorPicker,
-  ColorPickerSelection,
-  ColorPickerHue,
-  ColorPickerAlpha,
-  ColorPickerEyeDropper,
-  ColorPickerOutput,
-  ColorPickerFormat,
-} from "@/components/color-pick";
 import { useFunnel } from "@/contexts/funnel-context";
 
 export function FunnelPropertiesPanel() {
@@ -55,7 +55,7 @@ export function FunnelPropertiesPanel() {
   };
 
   return (
-    <div className="border rounded-xl m-1 w-[320px] h-[calc(100vh-60px)]  flex flex-col overflow-hidden">
+    <div className="bg-[#ffffff] border rounded-xl m-1 w-[300px] h-[calc(90vh)]  flex flex-col overflow-hidden">
       <div className="flex justify-between items-center gap-2 p-2 border-b flex-shrink-0">
         <Button
           variant={activeTab === "componente" ? "secondary" : "ghost"}
@@ -424,7 +424,7 @@ export function FunnelPropertiesPanel() {
                         step="5"
                         value={parseInt(
                           selectedWidget?.style?.width?.replace("%", "") ||
-                            "100",
+                          "100",
                         )}
                         onChange={(e) =>
                           handleUpdateStyle("width", `${e.target.value}%`)

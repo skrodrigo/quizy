@@ -77,9 +77,8 @@ function SortableWidget({
           }
         }}
         style={{ width: widget.style.width || "100%" }}
-        className={`cursor-grab active:cursor-grabbing  ${
-          isSelected ? "border border-muted border-dashed" : ""
-        }`}
+        className={`cursor-grab active:cursor-grabbing  ${isSelected ? "border border-muted border-dashed" : ""
+          }`}
       >
         <WidgetRenderer widget={widget} />
       </div>
@@ -156,8 +155,8 @@ export function FunnelEditor() {
   }
 
   return (
-    <div className="flex-1 overflow-auto">
-      <div className="px-12 h-full">
+    <div className="flex-1 overflow-auto h-[calc(90vh)]">
+      <div className="px-8 h-full">
         <div
           ref={editorContentRef}
           onClick={handleEditorClick}

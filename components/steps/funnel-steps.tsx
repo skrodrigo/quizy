@@ -115,11 +115,10 @@ function SortableStep({
     <div ref={setNodeRef} style={style} className="relative group w-full">
       <Button
         variant="outline"
-        className={`w-[190px] justify-start gap-2 pr-10 overflow-hidden group/button transition-all ${
-          isSelected
-            ? "ring-2 ring-primary shadow-md opacity-100"
-            : "opacity-60 hover:opacity-100"
-        }`}
+        className={`w-[190px] justify-start gap-2 pr-10 overflow-hidden group/button transition-all ${isSelected
+          ? "ring-2 ring-primary shadow-md opacity-100"
+          : "opacity-60 hover:opacity-100"
+          }`}
         onClick={() => onSelect(step.id)}
         onDoubleClick={handleDoubleClick}
       >
@@ -265,13 +264,13 @@ export function FunnelSteps() {
   };
 
   return (
-    <div className="border rounded-xl m-1 min-w-[200px] max-w-[200px] h-[calc(100vh-60px)] relative overflow-hidden">
+    <div className="bg-[#ffffff] border rounded-xl m-1 min-w-[200px] max-w-[200px] h-[calc(70vh)] relative overflow-hidden">
       {showTopFade && (
         <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none rounded-t-xl transition-opacity duration-200" />
       )}
 
-      <ScrollArea ref={scrollRef} className="h-[calc(100vh-50px)]">
-        <div className="p-1 space-y-2">
+      <ScrollArea ref={scrollRef}>
+        <div className="p-1 space-y-2 py-2">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}

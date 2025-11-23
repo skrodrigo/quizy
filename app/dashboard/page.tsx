@@ -183,13 +183,13 @@ export default function DashboardPage() {
               <Image
                 src={
                   mounted && theme === "dark"
-                    ? "/funilead.svg"
-                    : "/funilead-black.svg"
+                    ? "/f.svg"
+                    : "/f-black.svg"
                 }
                 alt="funilead"
-                width={100}
-                height={100}
-                className="w-16 flex-shrink-0"
+                width={32}
+                height={32}
+                className="w-6 flex-shrink-0"
                 priority
               />
               <div className="w-[0.5px] bg-muted h-4" />

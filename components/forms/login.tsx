@@ -87,14 +87,14 @@ export default function LoginForm() {
           <div className="flex items-center flex-col justify-center mb-4">
             <Link href="/" aria-label="go home">
               <Image
-                src="/funilead.svg"
+                src="/funilead-black.svg"
                 alt="funilead"
                 width={100}
                 height={100}
-                className="w-32"
+                quality={100}
+                className="w-52"
               />
             </Link>
-            <p className="text-xl font-light text-foreground">Entrar</p>
           </div>
 
           <Form {...form}>
@@ -146,7 +146,7 @@ export default function LoginForm() {
             <Button
               type="button"
               variant="outline"
-              className="w-full"
+              className="w-full "
               onClick={handleGoogleSignIn}
             >
               <svg
@@ -177,7 +177,7 @@ export default function LoginForm() {
           </div>
         </div>
 
-        <p className="text-center text-muted-foreground">
+        <p className="text-center text-muted-foreground font-sans text-sm">
           Não tem uma conta?{" "}
           <Link
             href="/auth/register"

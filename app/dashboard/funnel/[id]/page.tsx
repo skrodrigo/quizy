@@ -202,15 +202,16 @@ function FunnelPageContent() {
   };
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-hidden bg-[#f3f3f3]">
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
         className="flex flex-col flex-1 overflow-hidden"
       >
-        <header className="bg-background border-b flex-shrink-0">
+        <header className="flex-shrink-0">
           <div className="w-full mx-auto px-2">
             <div className="flex items-center gap-2 sm:gap-4 min-h-12 max-h-12">
+
               <Button
                 variant="outline"
                 size="icon"
@@ -218,27 +219,27 @@ function FunnelPageContent() {
               >
                 <IconChevronLeft stroke={2} className="size-4" />
               </Button>
-              <div className="w-[0.5px] bg-muted h-4 hidden sm:block" />
-              <div className="flex items-center gap-2 sm:gap-4">
+
+              <div className="flex bg-[#ffffff] items-center gap-2 sm:gap-4 px-4 rounded-lg border">
                 <span className="text-muted-foreground text-sm">
                   Funil 1 - Produto A
                 </span>
                 <TabsList className="text-foreground h-auto gap-1 sm:gap-2 rounded-none bg-transparent px-0 py-1 w-auto">
                   <TabsTrigger
                     value="constructor"
-                    className="text-xs sm:text-sm hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-2.5 after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                    className="text-xs sm:text-sm hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-[5px] after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                   >
                     Construtor
                   </TabsTrigger>
                   <TabsTrigger
                     value="fluxo"
-                    className="text-xs sm:text-sm hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-2.5   after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                    className="text-xs sm:text-sm hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-[5px] after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                   >
                     Fluxo
                   </TabsTrigger>
                   <TabsTrigger
                     value="config"
-                    className="text-xs sm:text-sm hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-2.5   after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                    className="text-xs sm:text-sm hover:bg-accent hover:text-foreground data-[state=active]:after:bg-primary data-[state=active]:hover:bg-accent relative after:absolute after:inset-x-0 after:bottom-0 after:-mb-[5px] after:h-0.5 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                   >
                     Configurações
                   </TabsTrigger>
@@ -333,52 +334,29 @@ function FunnelPageContent() {
                   Publicar
                 </Button>
               </div>
+
             </div>
           </div>
         </header>
 
-        <main className="flex w-full flex-1 overflow-hidden">
+        <main className="flex w-full flex-1 overflow-hidden justify-center items-center">
           {activeTab === "constructor" && (
             <>
               <FunnelSteps />
               <FunnelWidgets />
               {mobileView ? (
-                <div className="flex-1 flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+                <div className="flex-1 flex items-center justify-center">
                   <div className="relative max-w-sm w-full p-4">
                     {deviceType === "ios" ? (
                       <div className="relative">
                         <Iphone className="w-full" />
-                        <div
-                          className="absolute bg-muted overflow-auto"
-                          style={{
-                            left: "4.9%",
-                            top: "2.2%",
-                            width: "90%",
-                            height: "95.6%",
-                            borderRadius: "12.8% / 6.6%",
-                          }}
-                        >
-                          <div className="h-full w-full scale-75 origin-top-left transform">
-                            <FunnelEditor />
-                          </div>
-                        </div>
+                        <FunnelEditor />
                       </div>
                     ) : (
                       <div className="relative">
                         <Android className="w-full" />
-                        <div
-                          className="absolute bg-muted overflow-auto"
-                          style={{
-                            left: "2.4%",
-                            top: "1.7%",
-                            width: "95.2%",
-                            height: "96.6%",
-                            borderRadius: "8% / 4%",
-                          }}
-                        >
-                          <div className="h-full w-full scale-75 origin-top-left transform">
-                            <FunnelEditor />
-                          </div>
+                        <div className="h-full w-full scale-75 origin-top-left transform">
+                          <FunnelEditor />
                         </div>
                       </div>
                     )}
@@ -400,7 +378,7 @@ function FunnelPageContent() {
           {activeTab === "config" && <FunnelConfig />}
         </main>
       </Tabs>
-    </div>
+    </div >
   );
 }
 

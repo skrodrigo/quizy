@@ -85,12 +85,12 @@ export function FunnelWidgets() {
   };
 
   return (
-    <div className="min-w-[200px] max-w-[200px] relative">
+    <div className="min-w-[200px] max-w-[200px] relative ">
       {showTopFade && (
-        <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none transition-opacity duration-700" />
+        <div className="absolute top-0 left-0 right-0 h-8  bg-gradient-to-b from-[#F3F3F3] to-transparent z-10 pointer-events-none transition-opacity duration-700" />
       )}
 
-      <ScrollArea ref={scrollRef} className="h-[calc(100vh-50px)]">
+      <ScrollArea ref={scrollRef} className="h-[calc(90vh)]">
         <div className="p-1 space-y-2">
           {widgets.map((widget) => {
             const Icon = widget.icon;
@@ -111,7 +111,7 @@ export function FunnelWidgets() {
       </ScrollArea>
 
       {showBottomFade && (
-        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none transition-opacity duration-700" />
+        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#F3F3F3] to-transparent z-10 pointer-events-none transition-opacity duration-700" />
       )}
     </div>
   );
